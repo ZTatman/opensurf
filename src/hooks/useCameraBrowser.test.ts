@@ -37,10 +37,16 @@ describe('browse results', () => {
     const results = browseResults({ ...initialBrowserState, area: device }, beaches, [])
     expect(results.nearby).toHaveLength(3)
     expect(results.hasFilters).toBe(false)
-    const city = browseResults({ ...initialBrowserState, area: device, radiusMiles: 5, explorePlace: fortPierce, query: fortPierce.label }, beaches, [])
-    expect(city.exploreQuery).toBe('')
-    expect(city.hasSelectedPlace).toBe(true)
-    expect(city.explore.every(({ distanceKm }) => distanceKm! <= 25 * 1.609344)).toBe(true)
+    const city = (radiusMiles: number) => browseResults({ ...initialBrowserState, area: device, radiusMiles, explorePlace: fortPierce, query: fortPierce.label }, beaches, [])
+    expect(city(25).exploreQuery).toBe('')
+    expect(city(25).hasSelectedPlace).toBe(true)
+  })
+  it('uses the range picker for a city explored from a device location', () => {
+    const carolinaBeach = { id: 'place:2', name: 'Carolina Beach', label: 'Carolina Beach, North Carolina, United States', latitude: 34.0352, longitude: -77.8936 }
+    const explore = (radiusMiles: number) => browseResults({ ...initialBrowserState, area: device, radiusMiles, explorePlace: carolinaBeach }, beaches, []).explore
+    expect(explore(5).map(({ camera }) => camera.id)).toEqual(['carolina-beach'])
+    expect(new Set(explore(25).map(({ camera }) => camera.id))).toEqual(new Set(['carolina-beach', 'bald-head', 'wrightsville']))
+    expect(explore(25).every(({ distanceKm }) => distanceKm! <= 25 * 1.609344)).toBe(true)
   })
   it('applies favorites to both rows and lists regions for the chosen country', () => {
     const results = browseResults({ ...initialBrowserState, area: device, favoritesOnly: true }, beaches, ['stlucie-surf', 'pipeline'])

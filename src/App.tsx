@@ -50,7 +50,7 @@ export default function App() {
             )} />
 
           <CameraCarousel title="Explore"
-            description={explorePlace ? `${explore.length} beaches within 25 miles of ${explorePlace.name}` : hasFilters ? `${explore.length} matching beaches outside your nearby selection` : area ? 'Other beaches around the world' : 'Discover beaches around the world'}
+            description={explorePlace ? `${explore.length} beaches within ${radiusMiles} miles of ${explorePlace.name}` : hasFilters ? `${explore.length} matching beaches outside your nearby selection` : area ? 'Other beaches around the world' : 'Discover beaches around the world'}
             entries={explore} actions={cameraActions}
             empty={hasFilters ? <>
               <p>No other beaches match these filters.</p>

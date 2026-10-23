@@ -1,4 +1,4 @@
-import { validCoordinates, type Coordinates } from './places'
+import { validCoordinates, type Coordinates } from './lib/geo'
 
 type LocationSource = Pick<Geolocation, 'getCurrentPosition'>
 

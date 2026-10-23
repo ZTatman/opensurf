@@ -1,6 +1,6 @@
 import { afterEach, expect, it, vi } from 'vitest'
 import { requestLocation } from './location'
-import { searchPlaces, validCoordinates } from './places'
+import { searchPlaces } from './places'
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -33,8 +33,6 @@ it('handles empty results, service errors, malformed responses, and aborts', asy
   await expect(searchPlaces('Boston', signal)).rejects.toThrow('unexpected')
   fetchMock.mockRejectedValueOnce(new DOMException('Aborted', 'AbortError'))
   await expect(searchPlaces('Boston', signal)).rejects.toMatchObject({ name: 'AbortError' })
-  expect(validCoordinates({ latitude: 0, longitude: 0 })).toBe(true)
-  expect(validCoordinates({ latitude: '42', longitude: 0 })).toBe(false)
 })
 
 

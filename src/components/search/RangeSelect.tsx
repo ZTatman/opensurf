@@ -1,4 +1,4 @@
-import { RANGE_MILES } from '../../model'
+import { RANGE_MILES } from '../../lib/geo'
 import OptionSelect from '../ui/OptionSelect'
 
 type RangeSelectProps = {

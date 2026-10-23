@@ -1,7 +1,7 @@
 import { Button, Link } from '@heroui/react'
 import { Check, ExternalLink, Plus, Star } from 'lucide-react'
 import { sourceUrl, type Camera } from '../../cameras'
-import { formatDistance } from '../../model'
+import { formatDistance } from '../../lib/geo'
 import { IconToggle } from '../ui/IconButton'
 
 // Shared by every card in a row, so lists pass one object instead of five props.

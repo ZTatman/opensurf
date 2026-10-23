@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
-import type { Coordinates } from '../places'
+import type { Coordinates } from '../lib/geo'
 import { startLocationRequest } from '../location'
 
 export type SearchArea = Coordinates & { label: string; kind: 'device' | 'place' }

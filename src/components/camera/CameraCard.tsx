@@ -1,28 +1,27 @@
-import { Button, Link, ToggleButton } from '@heroui/react'
+import { Button, Link } from '@heroui/react'
 import { Check, ExternalLink, Plus, Star } from 'lucide-react'
-import { sourceUrl, type Camera } from './cameras'
-import { formatDistance } from './model'
-import ActionHint from './ActionHint'
+import { sourceUrl, type Camera } from '../../cameras'
+import { formatDistance } from '../../model'
+import { IconToggle } from '../ui/IconButton'
+
+// Shared by every card in a row, so lists pass one object instead of five props.
+export type CameraActions = {
+  selectedIds: Set<string>
+  favoriteIds: Set<string>
+  onWatch: (id: string) => void
+  onCompare: (id: string) => void
+  onSave: (id: string) => void
+}
 
 type CameraCardProps = {
   camera: Camera
   distanceKm?: number
-  isSelected: boolean
-  isSaved: boolean
-  onWatch: () => void
-  onCompare: () => void
-  onSave: () => void
+  actions: CameraActions
 }
 
-export default function CameraCard({
-  camera,
-  distanceKm,
-  isSelected,
-  isSaved,
-  onWatch,
-  onCompare,
-  onSave,
-}: CameraCardProps) {
+export default function CameraCard({ camera, distanceKm, actions }: CameraCardProps) {
+  const isSelected = actions.selectedIds.has(camera.id)
+  const isSaved = actions.favoriteIds.has(camera.id)
   const saveLabel = `${isSaved ? 'Unsave' : 'Save'} ${camera.name}`
   const compareLabel = `${isSelected ? 'Remove' : 'Add'} ${camera.name} ${isSelected ? 'from' : 'to'} grid`
 
@@ -43,35 +42,21 @@ export default function CameraCard({
           </Link>
         ) : (
           <Button className="camera-preview h-auto w-full overflow-hidden rounded-xl p-0"
-            variant="ghost" aria-label={`Watch ${camera.name}`} onPress={onWatch}>
+            variant="ghost" aria-label={`Watch ${camera.name}`} onPress={() => actions.onWatch(camera.id)}>
             {preview}
           </Button>
         )}
         <div className="absolute right-2 top-2 flex gap-1">
-          <ActionHint label={saveLabel}>
-            <ToggleButton
-              className="size-11 min-w-11 bg-black/55 text-white data-[selected=true]:bg-accent"
-              variant="ghost"
-              isIconOnly
-              isSelected={isSaved}
-              onChange={onSave}
-              aria-label={saveLabel}
-            >
-              <Star size={19} fill={isSaved ? 'currentColor' : 'none'} aria-hidden="true" />
-            </ToggleButton>
-          </ActionHint>
-          {camera.playback === 'embed' ? <ActionHint label={compareLabel}>
-            <ToggleButton
-              className="compare-button size-11 min-w-11 bg-black/55 text-white data-[selected=true]:bg-accent"
-              variant="ghost"
-              isIconOnly
-              isSelected={isSelected}
-              onChange={onCompare}
-              aria-label={compareLabel}
-            >
+          <IconToggle label={saveLabel} className="bg-black/55 text-white data-[selected=true]:bg-accent"
+            isSelected={isSaved} onChange={() => actions.onSave(camera.id)}>
+            <Star size={19} fill={isSaved ? 'currentColor' : 'none'} aria-hidden="true" />
+          </IconToggle>
+          {camera.playback === 'embed' ? (
+            <IconToggle label={compareLabel} className="compare-button bg-black/55 text-white data-[selected=true]:bg-accent"
+              isSelected={isSelected} onChange={() => actions.onCompare(camera.id)}>
               {isSelected ? <Check size={20} aria-hidden="true" /> : <Plus size={20} aria-hidden="true" />}
-            </ToggleButton>
-          </ActionHint> : null}
+            </IconToggle>
+          ) : null}
         </div>
       </div>
       <div className="mt-3">

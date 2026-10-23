@@ -31,7 +31,7 @@
     object-fit: cover;
   }
 
-  .beach-carousel {
+  .carousel-track {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: clamp(16rem, 30vw, 21rem);
@@ -45,11 +45,11 @@
     padding: 0.25rem 0.25rem 1rem;
   }
 
-  .beach-carousel > article {
+  .carousel-track > * {
     scroll-snap-align: start;
   }
 
-  .beach-carousel:focus-visible {
+  .carousel-track:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
     border-radius: 0.5rem;

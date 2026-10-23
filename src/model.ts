@@ -63,8 +63,8 @@ export function formatDistance(km: number) {
   return miles < 1 ? '<1 mi' : `${Math.round(miles).toLocaleString()} mi`
 }
 
-
 export const NEARBY_RADIUS_MILES = 25
+export const RANGE_MILES = [5, 10, 25, 50, 100]
 
 export function beachSections(cameras: Camera[], origin: Coordinates | null, radiusMiles = NEARBY_RADIUS_MILES) {
   const beaches = cameras.filter(camera => camera.isBeach !== false)

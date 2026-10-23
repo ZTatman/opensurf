@@ -72,6 +72,15 @@ React, TypeScript, Vite, HeroUI 3, Tailwind CSS 4, Lucide icons, and Vitest. Her
 
 Tests cover automatic location setup and StrictMode cleanup, range changes and the default 25-mile carousel split, exclusion of non-beach views, no duplicate beaches across rows, unknown location behavior, official St. Lucie search aliases and nearby coverage, external source routing, operator outage labels, combined region/text/favorite filtering, catalog identities and valid coordinates, distance ordering and radius limits, antimeridian/antipodal cases, geocoder responses/errors/abort propagation, geolocation success/denial/errors, favorite persistence, and the four-camera limit. In-app browser checks of the simplified interface covered search, the optional country picker, favorites after reload, the four-camera limit, removing a selection and reusing its slot, and starting without mounted players. All 10 original provider previews loaded during the initial browser check; sustained playback of every feed has not been verified.
 
+## Continuous integration
+
+GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and every push to `main`:
+
+- **App checks**: `npm ci`, typecheck, lint, tests, and a production build, on the Node version in `.nvmrc`. Catalog problems (broken references, rejected sources, invalid coordinates, non-HTTPS links) fail the tests and build.
+- **Importer checks**: compiles `scripts/import-cameras.py` and runs `scripts/test_import_cameras.py`, which tests the catalog merge step offline. CI never fetches camera listings.
+
+`main` requires both checks to pass and changes to arrive through a pull request. Run the importer tests locally with `python3 -m unittest discover -s scripts -p 'test_*.py'`.
+
 ## License
 
 MIT for project-authored code. Camera video, previews, provider players, and third-party dependencies retain their owners' rights and terms. The app has not been deployed.

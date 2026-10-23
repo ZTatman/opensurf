@@ -1,28 +1,24 @@
-import { Button } from '@heroui/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
-import type { Camera } from './cameras'
-import ActionHint from './ActionHint'
-import CameraCard from './CameraCard'
+import { Children, useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { IconButton } from './IconButton'
 
-type Props = {
+type CarouselProps = {
   title: string
   description: string
-  entries: { camera: Camera; distanceKm?: number }[]
-  selectedIds: Set<string>
-  favoriteIds: Set<string>
-  onWatch: (id: string) => void
-  onCompare: (id: string) => void
-  onSave: (id: string) => void
+  // Accessible name for the track, such as "Explore beaches".
+  label: string
+  children: ReactNode
   empty: ReactNode
   action?: ReactNode
   status?: string
 }
 
-export default function CameraCarousel({ title, description, entries, selectedIds, favoriteIds, onWatch, onCompare, onSave, empty, action, status }: Props) {
+// A horizontally scrolling row that never auto-advances. Each child is one snap item.
+export default function Carousel({ title, description, label, children, empty, action, status }: CarouselProps) {
   const headingId = useId()
   const trackId = useId()
   const track = useRef<HTMLDivElement>(null)
+  const count = Children.count(children)
   const [edges, setEdges] = useState({ previous: false, next: false })
   const syncEdges = useCallback(() => {
     const node = track.current
@@ -38,7 +34,7 @@ export default function CameraCarousel({ title, description, entries, selectedId
     const observer = new ResizeObserver(syncEdges)
     observer.observe(node)
     return () => observer.disconnect()
-  }, [syncEdges, entries.length])
+  }, [syncEdges, count])
 
   function move(direction: number) {
     const node = track.current
@@ -58,36 +54,28 @@ export default function CameraCarousel({ title, description, entries, selectedId
         </div>
         <div className="ml-auto flex shrink-0 items-center gap-1">
           {action}
-          {entries.length > 1 ? <>
-            <ActionHint label={`Previous ${title.toLocaleLowerCase()} beaches`}>
-              <Button className="size-11 min-w-11" variant="ghost" isIconOnly isDisabled={!edges.previous}
-                aria-label={`Previous ${title.toLocaleLowerCase()} beaches`} aria-controls={trackId} onPress={() => move(-1)}>
-                <ChevronLeft size={20} aria-hidden="true" />
-              </Button>
-            </ActionHint>
-            <ActionHint label={`Next ${title.toLocaleLowerCase()} beaches`}>
-              <Button className="size-11 min-w-11" variant="ghost" isIconOnly isDisabled={!edges.next}
-                aria-label={`Next ${title.toLocaleLowerCase()} beaches`} aria-controls={trackId} onPress={() => move(1)}>
-                <ChevronRight size={20} aria-hidden="true" />
-              </Button>
-            </ActionHint>
+          {count > 1 ? <>
+            <IconButton label={`Previous ${label.toLocaleLowerCase()}`} isDisabled={!edges.previous}
+              aria-controls={trackId} onPress={() => move(-1)}>
+              <ChevronLeft size={20} aria-hidden="true" />
+            </IconButton>
+            <IconButton label={`Next ${label.toLocaleLowerCase()}`} isDisabled={!edges.next}
+              aria-controls={trackId} onPress={() => move(1)}>
+              <ChevronRight size={20} aria-hidden="true" />
+            </IconButton>
           </> : null}
         </div>
       </div>
       {status ? <p className="mb-4 text-sm text-muted" role="status">{status}</p> : null}
-      {entries.length ? (
-        <div id={trackId} ref={track} className="beach-carousel" tabIndex={0}
-          role="region" aria-roledescription="carousel" aria-label={`${title} beaches`}
+      {count ? (
+        <div id={trackId} ref={track} className="carousel-track" tabIndex={0}
+          role="region" aria-roledescription="carousel" aria-label={label}
           onScroll={syncEdges} onKeyDown={event => {
             if (event.target !== event.currentTarget || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return
             event.preventDefault()
             move(event.key === 'ArrowRight' ? 1 : -1)
           }}>
-          {entries.map(({ camera, distanceKm }) => (
-            <CameraCard key={camera.id} camera={camera} distanceKm={distanceKm}
-              isSelected={selectedIds.has(camera.id)} isSaved={favoriteIds.has(camera.id)}
-              onWatch={() => onWatch(camera.id)} onCompare={() => onCompare(camera.id)} onSave={() => onSave(camera.id)} />
-          ))}
+          {children}
         </div>
       ) : <div className="py-5 text-sm text-muted">{empty}</div>}
     </section>

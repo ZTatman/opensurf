@@ -1,9 +1,9 @@
 import { ComboBox, Input, Label, ListBox } from '@heroui/react'
 import { ExternalLink, MapPin, Search, Video } from 'lucide-react'
 import { useState } from 'react'
-import { beaches as cameras } from './cameras'
-import { filterCameras } from './model'
-import { usePlaceSearch, type Place } from './places'
+import { beaches as cameras } from '../../cameras'
+import { filterCameras } from '../../model'
+import { usePlaceSearch, type Place } from '../../places'
 
 type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; place?: Place }
 type Props = {

@@ -1,8 +1,9 @@
-import { Button, Link } from '@heroui/react'
+import { Link } from '@heroui/react'
 import { ExternalLink, RotateCw, X } from 'lucide-react'
 import { useState } from 'react'
-import { embedUrl, sourceUrl, type EmbeddedCamera } from './cameras'
-import ActionHint from './ActionHint'
+import { embedUrl, sourceUrl, type EmbeddedCamera } from '../../cameras'
+import ActionHint from '../ui/ActionHint'
+import { IconButton } from '../ui/IconButton'
 
 type CameraPlayerProps = {
   camera: EmbeddedCamera
@@ -20,12 +21,9 @@ export default function CameraPlayer({ camera, onRemove }: CameraPlayerProps) {
           <p className="mt-1 text-xs text-muted">{camera.region}, {camera.country}</p>
         </div>
         <div className="flex shrink-0 items-center">
-          <ActionHint label={`Reload ${camera.name}`}>
-            <Button className="size-11 min-w-11" variant="ghost" isIconOnly
-              onPress={() => setReload(value => value + 1)} aria-label={`Reload ${camera.name}`}>
-              <RotateCw size={18} aria-hidden="true" />
-            </Button>
-          </ActionHint>
+          <IconButton label={`Reload ${camera.name}`} onPress={() => setReload(value => value + 1)}>
+            <RotateCw size={18} aria-hidden="true" />
+          </IconButton>
           <ActionHint label={`Open original ${camera.name} camera`}>
             <Link className="flex size-11 items-center justify-center rounded-full"
               href={sourceUrl(camera)} target="_blank" rel="noopener noreferrer"
@@ -33,12 +31,9 @@ export default function CameraPlayer({ camera, onRemove }: CameraPlayerProps) {
               <ExternalLink size={18} aria-hidden="true" />
             </Link>
           </ActionHint>
-          <ActionHint label={`Remove ${camera.name}`}>
-            <Button className="size-11 min-w-11" variant="ghost" isIconOnly
-              onPress={onRemove} aria-label={`Remove ${camera.name}`}>
-              <X size={20} aria-hidden="true" />
-            </Button>
-          </ActionHint>
+          <IconButton label={`Remove ${camera.name}`} onPress={onRemove}>
+            <X size={20} aria-hidden="true" />
+          </IconButton>
         </div>
       </div>
       <div className="camera-frame overflow-hidden rounded-xl">

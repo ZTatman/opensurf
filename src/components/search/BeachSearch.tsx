@@ -1,12 +1,13 @@
 import { ComboBox, Input, Label, ListBox } from '@heroui/react'
-import { ExternalLink, MapPin, Search, Video } from 'lucide-react'
+import { ExternalLink, MapPin, Search, Video, Waves } from 'lucide-react'
 import { useState } from 'react'
 import { beaches as cameras } from '../../cameras'
-import { filterCameras } from '../../lib/search'
+import { filterCameras, searchBeachIndex } from '../../lib/search'
+import { useBeachIndex } from '../../hooks/useBeachIndex'
 import { usePlaceSearch } from '../../hooks/usePlaceSearch'
 import type { Place } from '../../services/geocoding'
 
-type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; cameraId?: string; place?: Place }
+type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'indexed' | 'place'; external?: boolean; cameraId?: string; place?: Place }
 type Props = {
   query: string
   onQueryChange: (query: string) => void
@@ -20,12 +21,18 @@ export default function BeachSearch({ query, onQueryChange, onWatch, onPlace, ha
   const [focused, setFocused] = useState(false)
   const [selected, setSelected] = useState<Suggestion | null>(null)
   const search = usePlaceSearch(query, focused && !hasSelectedPlace)
+  const beachIndex = useBeachIndex(focused)
   const term = query.trim().toLocaleLowerCase()
   const candidates: Suggestion[] = term && !hasSelectedPlace ? [
     ...regions.filter(([region, country]) => `${region} ${country}`.toLocaleLowerCase().includes(term)).slice(0, 3)
       .map(([region, country]) => ({ id: `region:${region}`, label: region, detail: country, kind: 'region' as const })),
     ...filterCameras(cameras, { query }).slice(0, 4)
       .map(camera => ({ id: `beach:${camera.id}`, label: camera.name, detail: `${camera.beach}, ${camera.region}${camera.playback === 'external' ? ` · Opens ${camera.sourceName}` : ''}`, external: camera.playback === 'external', kind: 'beach' as const, cameraId: camera.id })),
+    // Beaches without a camera: choosing one browses the cameras around it, like a city.
+    ...searchBeachIndex(beachIndex, query, 3).map(beach => ({
+      id: `indexed:${beach.id}`, label: beach.name, detail: `${beach.county ? `${beach.county}, ` : ''}${beach.region} · No camera yet`, kind: 'indexed' as const,
+      place: { id: `indexed:${beach.id}`, name: beach.name, label: `${beach.name}, ${beach.region}`, latitude: beach.latitude, longitude: beach.longitude },
+    })),
     ...(search?.places ?? []).map(place => ({ id: place.id, label: place.label, detail: 'Find cameras nearby', kind: 'place' as const, place })),
   ] : []
   const matches = selected?.label === query && !candidates.some(item => item.id === selected.id) ? [selected, ...candidates] : candidates
@@ -59,7 +66,7 @@ export default function BeachSearch({ query, onQueryChange, onWatch, onPlace, ha
         )}>
           {item => (
             <ListBox.Item id={item.id} textValue={item.label}>
-              {item.external ? <ExternalLink size={17} aria-hidden="true" /> : item.kind === 'beach' ? <Video size={17} aria-hidden="true" /> : <MapPin size={17} aria-hidden="true" />}
+              {item.external ? <ExternalLink size={17} aria-hidden="true" /> : item.kind === 'beach' ? <Video size={17} aria-hidden="true" /> : item.kind === 'indexed' ? <Waves size={17} aria-hidden="true" /> : <MapPin size={17} aria-hidden="true" />}
               <div className="min-w-0"><Label className="truncate">{item.label}</Label><span className="block text-xs text-muted">{item.detail}</span></div>
             </ListBox.Item>
           )}

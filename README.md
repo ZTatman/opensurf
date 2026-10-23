@@ -30,7 +30,7 @@ The production output is in `dist/` and can be served by a static web server. Th
 - Use the **star** to save a favorite, and the toolbar star to show favorites.
 - Use **plus/check** to add or remove a camera from comparison, up to four. The layout follows the selection count automatically.
 - Use the toolbar's **camera count** to jump back to selected players while browsing.
-- Search by beach, city, state, or region. Catalog beaches and regions appear alongside city suggestions; choose a beach to watch it or a city to browse cameras around it. A searched city is an explicitly labeled nearby fallback while device location is unavailable. Once a device position is set, city search only filters Explore, to beaches within the selected range of that city; the nearby row stays anchored to your location. Use arrow keys and Enter to choose a suggestion.
+- Search by beach, city, state, or region. Camera beaches and regions appear alongside city suggestions, plus about 5,000 U.S. beaches from the national beach index that have no camera yet (marked **No camera yet**). Choose a camera beach to watch it, or a city or index beach to browse the cameras around it. A searched city or index beach is an explicitly labeled nearby fallback while device location is unavailable. Once a device position is set, city search only filters Explore, to beaches within the selected range of that city; the nearby row stays anchored to your location. Use arrow keys and Enter to choose a suggestion.
 - The nearby **range** picker uses approximate straight-line distances. Search and country/region filters affect Explore; the nearby row keeps its location. The favorites toggle applies to both rows. Changing range moves beaches between Nearby and Explore without duplication.
 - The **filter** icon reveals country and region/state pickers. Search covers the bundled catalog, not every public camera on the web. An empty result means the curated catalog has no matching cameras in that area; it does not mean the beach has no webcams.
 - If location access is denied or unavailable, search for a city as a fallback, or allow location in browser settings and reload. There is no separate location button. Coordinates stay in memory for this visit.
@@ -60,6 +60,14 @@ City lookup accepts St./St and Ft./Ft abbreviations as Saint and Fort. City sugg
 
 Device coordinates remain in memory and are used only for distance calculations against the bundled catalog. They are not saved or sent to the geocoding service. Typed place queries are sent to Open-Meteo while the search has focus. The on-load location request is deferred one tick so React StrictMode replay does not ask twice, and ignores stale responses after unmount or choosing a fallback city. Browser geolocation requires permission and HTTPS (localhost is supported). Denied, unavailable, and timed-out location requests offer city/region search instead.
 
+## Beach index
+
+Search also covers a national index of U.S. beaches built from the EPA [BEACH Act beach dataset](https://www.epa.gov/waterdata/waters-geospatial-data-downloads) (February 2024 snapshot), a U.S. Government work with no reuse restrictions. `scripts/import-epa-beaches.py` keeps active, publicly accessible beaches, tidies names (title case, no trailing parentheticals), and merges monitoring segments of one beach, such as "Ocean City at 7th St" and "Ocean City at 40th St", when they share a base name and county and lie within 5 km. It writes `src/data/catalog/beaches-epa.json`: 5,172 beaches from 5,798 segments.
+
+The index is about 900 KB (170 KB compressed), so it loads as a separate chunk the first time the search box gets focus. Beaches that already have cameras list the matching EPA segment IDs in `externalIds` in `beaches.json` (for example `epa:FL123456`), and those EPA entries are hidden so a beach is never listed twice. A refresh that drops a linked segment fails the tests.
+
+To refresh: `python3 scripts/import-epa-beaches.py` downloads the dataset (about 4 MB, Python 3 and curl); pass a local `.gpkg` path to skip the download. Review the diff, especially renamed or merged beaches, then run the tests. EPA's live data is in [BEACON 2.0](https://beacon.epa.gov/ords/beacon2/r/beacon_apex/beacon2/map-page), which has no bulk export, so the snapshot can lag recent changes.
+
 ## REA investigation
 
 The existing REA 6.5.0 installation on this Mac was used to inspect a public embed and its click-to-load player. REA also captured the Pipeline player fetching video segments. One different candidate reported offline and was excluded from the starter list. See [the investigation](docs/research/rea-public-player.md).
@@ -77,7 +85,7 @@ Tests cover automatic location setup and StrictMode cleanup, range changes and t
 GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and every push to `main`:
 
 - **App checks**: `npm ci`, typecheck, lint, tests, and a production build, on the Node version in `.nvmrc`. Catalog problems (broken references, rejected sources, invalid coordinates, non-HTTPS links) fail the tests and build.
-- **Importer checks**: compiles `scripts/import-cameras.py` and runs `scripts/test_import_cameras.py`, which tests the catalog merge step offline. CI never fetches camera listings.
+- **Importer checks**: compiles `scripts/import-cameras.py` and runs the offline importer tests in `scripts/test_*.py` (the camera catalog merge and the EPA beach import). CI never fetches camera listings.
 
 Branch protection is not enabled: GitHub only offers it for private repositories on paid plans, so the checks report failures but do not block merges. Run the importer tests locally with `python3 -m unittest discover -s scripts -p 'test_*.py'`.
 

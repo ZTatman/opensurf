@@ -39,7 +39,7 @@ export default function App() {
 
         <div id="camera-library" className="space-y-10 scroll-mt-40 sm:scroll-mt-28">
           <CameraCarousel title={nearbyTitle}
-            description={area ? `${nearby.length} beach cam${nearby.length === 1 ? '' : 's'} within ${radiusMiles} miles${area.kind === 'place' ? ' of this city' : ''}` : `Beaches within ${radiusMiles} miles of your location`}
+            description={area ? `${nearby.length} beach cam${nearby.length === 1 ? '' : 's'} within ${radiusMiles} miles${area.kind === 'place' ? ` of ${area.label.split(',')[0]}` : ''}` : `Beaches within ${radiusMiles} miles of your location`}
             status={browser.locationError || (browser.locating ? 'Finding your location…' : '')}
             entries={nearby} actions={cameraActions}
             action={<RangeSelect miles={radiusMiles} onChange={browser.setRadius} />}

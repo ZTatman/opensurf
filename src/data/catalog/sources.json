@@ -23,6 +23,13 @@
     "notes": "Vista Webcams players restrict embedding to approved domains (frame-ancestors). Link to the official camera pages; do not embed or proxy. See docs/research/visit-st-lucie.md."
   },
   {
+    "id": "epa-beach",
+    "name": "U.S. EPA",
+    "status": "approved",
+    "homepage": "https://www.epa.gov/waterdata/waters-geospatial-data-downloads",
+    "notes": "BEACH Act beach dataset (February 2024 snapshot): active, publicly accessible beaches, imported by scripts/import-epa-beaches.py. U.S. Government work with no reuse restrictions. Supplies the beach index only, not cameras."
+  },
+  {
     "id": "openwebcamdb",
     "name": "OpenWebcamDB",
     "status": "rejected",

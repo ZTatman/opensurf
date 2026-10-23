@@ -38,6 +38,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      - run: python -m py_compile scripts/import-cameras.py
-      # Offline: exercises the catalog merge step, never fetches listings.
+      - run: python -m py_compile scripts/import-cameras.py scripts/import-epa-beaches.py
+      # Offline: never fetches camera listings or the EPA dataset.
       - run: python -m unittest discover -s scripts -p 'test_*.py' -v

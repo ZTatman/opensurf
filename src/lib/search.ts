@@ -1,4 +1,4 @@
-import type { Camera } from '../cameras'
+import type { Camera, IndexedBeach } from '../cameras'
 
 export type CameraFilter = {
   query?: string
@@ -26,3 +26,23 @@ export function filterCameras(cameras: Camera[], { query = '', country = '', reg
     return words.every(word => text.includes(word))
   })
 }
+
+const indexText = new WeakMap<IndexedBeach[], string[]>()
+
+// Beaches whose name, county or state contain every query word, names starting with the query first.
+export function searchBeachIndex(index: IndexedBeach[], query: string, limit: number) {
+  const words = normalizeText(query).trim().split(/\s+/).filter(Boolean)
+  if (!words.length) return []
+  let texts = indexText.get(index)
+  if (!texts) {
+    texts = index.map(beach => normalizeText([beach.name, beach.county ?? '', beach.region].join(' ')))
+    indexText.set(index, texts)
+  }
+  const phrase = words.join(' ')
+  return index.filter((_, position) => words.every(word => texts[position].includes(word)))
+    .map(beach => ({ beach, rank: normalizeText(beach.name).trim().startsWith(phrase) ? 0 : 1 }))
+    .sort((a, b) => a.rank - b.rank || a.beach.name.length - b.beach.name.length || a.beach.name.localeCompare(b.beach.name))
+    .slice(0, limit)
+    .map(({ beach }) => beach)
+}
+

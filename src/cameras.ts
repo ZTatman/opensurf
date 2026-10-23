@@ -1,39 +1,19 @@
-import catalog from './data/cameras.json'
-import stLucieCatalog from './data/visit-st-lucie.json'
+import sourceRecords from './data/catalog/sources.json'
+import beachRecords from './data/catalog/beaches.json'
+import cameraRecords from './data/catalog/cameras.json'
+import { buildCatalog, type BeachRecord, type Camera, type CameraRecord, type EmbeddedCamera, type SourceRecord } from './catalog'
 
-type CameraInfo = {
-  id: string
-  name: string
-  beach: string
-  region: string
-  country: string
-  latitude: number
-  longitude: number
-  previewUrl: string
-  isBeach?: boolean
-  searchTerms?: string[]
-  availabilityNote?: string
-}
+export type { Camera, EmbeddedCamera, ExternalCamera } from './catalog'
 
-export type EmbeddedCamera = CameraInfo & { playback: 'embed'; path: string }
-export type ExternalCamera = CameraInfo & { playback: 'external'; watchUrl: string; sourceName: string }
-export type Camera = EmbeddedCamera | ExternalCamera
-
-export const provider = {
-  name: 'Live Beach Cams',
-  terms: 'https://worldbeachcams.com/en/terms',
-}
-
-export const sourceUrl = (camera: Camera) => camera.playback === 'external'
-  ? camera.watchUrl
-  : `https://worldbeachcams.com/en/${camera.path}`
-export const embedUrl = (camera: EmbeddedCamera) => `https://worldbeachcams.com/embed/${camera.path}`
-
-// Curated snapshots of public listings, 2026-10-23. Coordinates are approximate.
+// Curated snapshots of public listings; see each camera's checkedAt. Coordinates are approximate.
 // External listings retain the operator's own player and viewing restrictions.
-export const cameras: Camera[] = [
-  ...catalog.map(camera => ({ ...camera, playback: 'embed' as const })),
-  ...stLucieCatalog.map(camera => ({ ...camera, playback: 'external' as const })),
-]
+// JSON imports are typed loosely, so buildCatalog validates every record at load.
+export const cameras: Camera[] = buildCatalog(sourceRecords as SourceRecord[], beachRecords as BeachRecord[], cameraRecords as CameraRecord[])
 
-export const beaches = cameras.filter(camera => camera.isBeach !== false)
+// Approved sources that currently supply cameras, in catalog order, for attribution.
+export const sources = (sourceRecords as SourceRecord[]).filter(source => cameras.some(camera => camera.sourceId === source.id))
+
+export const sourceUrl = (camera: Camera) => camera.pageUrl
+export const embedUrl = (camera: EmbeddedCamera) => camera.embedUrl
+
+export const beaches = cameras.filter(camera => camera.isBeach)

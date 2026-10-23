@@ -1,0 +1,362 @@
+[
+  {
+    "id": "pipeline",
+    "sourceId": "worldbeachcams",
+    "beachId": "haleiwa-hawaii",
+    "name": "Banzai Pipeline",
+    "path": "usa/hawaii/banzai-pipeline-hawaii",
+    "previewUrl": "https://img.youtube.com/vi/Fp7l8XASb9Y/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "avalon",
+    "sourceId": "worldbeachcams",
+    "beachId": "avalon-new-jersey",
+    "name": "Avalon Fishing Pier",
+    "path": "usa/new-jersey/avalon-fishing-pier-nj",
+    "previewUrl": "https://img.youtube.com/vi/ZVvBvkJB0w4/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "bald-head",
+    "sourceId": "worldbeachcams",
+    "beachId": "bald-head-island-north-carolina",
+    "name": "Bald Head Island",
+    "path": "usa/north-carolina/bald-head-island",
+    "previewUrl": "https://img.youtube.com/vi/lcANlrXCR0Q/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "ocean-city",
+    "sourceId": "worldbeachcams",
+    "beachId": "ocean-city-maryland",
+    "name": "Ocean City Boardwalk",
+    "path": "usa/maryland/atlantic-ave-live-hd-webcam-comfort-inn-boardwalk-ocean-city-usa",
+    "previewUrl": "https://img.youtube.com/vi/zGima24vRHM/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "anacapa",
+    "sourceId": "worldbeachcams",
+    "beachId": "anacapa-island-california",
+    "name": "Anacapa Island Cove",
+    "path": "usa/california/anacapa-island-cove",
+    "previewUrl": "https://img.youtube.com/vi/fAS2TFePbQk/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "vlieland",
+    "sourceId": "worldbeachcams",
+    "beachId": "vlieland-friesland",
+    "name": "Badhuys Beach",
+    "path": "netherlands/friesland/badhuys-vlieland-live-hd-webcam-oost-vlieland-netherlands",
+    "previewUrl": "https://img.youtube.com/vi/34tOlrk7z4M/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "bagni-miki",
+    "sourceId": "worldbeachcams",
+    "beachId": "chioggia-veneto",
+    "name": "Bagni Miki Beach",
+    "path": "italy/veneto/bagni-miki-beach-cam-ve",
+    "previewUrl": "https://img.youtube.com/vi/3LGl860wEaY/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "rincao",
+    "sourceId": "worldbeachcams",
+    "beachId": "balneario-rincao-santa-catarina",
+    "name": "Balneário Rincão",
+    "path": "brazil/santa-catarina/balneario-rincao-beach",
+    "previewUrl": "https://img.youtube.com/vi/mWsPnnbHKE0/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "roquille",
+    "sourceId": "worldbeachcams",
+    "beachId": "agde-occitania",
+    "name": "Plage de la Roquille",
+    "path": "france/occitania/agde-cap-plage-roquille-france",
+    "previewUrl": "https://cameras.volvevision.com/static/preview/windy-1243249420-0dfebea3.webp",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "krioneri",
+    "sourceId": "worldbeachcams",
+    "beachId": "agia-kyriaki-epirus",
+    "name": "Krioneri Beach",
+    "path": "greece/epirus-and-western-macedonia/agia-kyriaki-krioneri-beach-panagia",
+    "previewUrl": "https://cameras.volvevision.com/static/preview/windy-1267633028-5dd624ba.webp",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "georgica",
+    "sourceId": "worldbeachcams",
+    "beachId": "east-hampton-new-york",
+    "name": "Georgica Beach",
+    "path": "usa/new-york/georgica-beach-east-hampton-ny",
+    "previewUrl": "https://img.youtube.com/vi/xvMcuLPJbbs/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "tobay",
+    "sourceId": "worldbeachcams",
+    "beachId": "oyster-bay-new-york",
+    "name": "Tobay Beach",
+    "path": "usa/new-york/live-webcam-tobay-beach-oyster-bay-ny",
+    "previewUrl": "https://img.youtube.com/vi/7shCjhL0kcA/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "rogers",
+    "sourceId": "worldbeachcams",
+    "beachId": "westhampton-beach-new-york",
+    "name": "Rogers Beach",
+    "path": "usa/new-york/rogers-beach-westhampton-ny",
+    "previewUrl": "https://img.youtube.com/vi/oWKwLIixxjE/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "sea-isle",
+    "sourceId": "worldbeachcams",
+    "beachId": "sea-isle-city-new-jersey",
+    "name": "Sea Isle City Beach",
+    "path": "usa/new-jersey/live-sea-isle-city-beach-patrol-webcam-new-jersey-usa",
+    "previewUrl": "https://img.youtube.com/vi/FYOGiFH60uM/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "ocean-city-nj",
+    "sourceId": "worldbeachcams",
+    "beachId": "ocean-city-new-jersey",
+    "name": "Ocean City Music Pier",
+    "path": "usa/new-jersey/ocean-city-music-pier-nj",
+    "previewUrl": "https://img.youtube.com/vi/kBvlAcTHVlE/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "cahoon-hollow",
+    "sourceId": "worldbeachcams",
+    "beachId": "wellfleet-massachusetts",
+    "name": "Cahoon Hollow Beach",
+    "path": "usa/massachusetts/live-cahoon-hollow-beach-webcam-wellfleet-ma-usa",
+    "previewUrl": "https://img.youtube.com/vi/_3LjfzI7EIM/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "salisbury",
+    "sourceId": "worldbeachcams",
+    "beachId": "salisbury-massachusetts",
+    "name": "Salisbury Beach",
+    "path": "usa/massachusetts/live-hd-webcam-in-salisbury-beach-ma-usa",
+    "previewUrl": "https://img.youtube.com/vi/870YJO-cr_w/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "carolina-beach",
+    "sourceId": "worldbeachcams",
+    "beachId": "carolina-beach-north-carolina",
+    "name": "Carolina Beach",
+    "path": "usa/north-carolina/carolina-beach-live-webcam-north-carolina-usa",
+    "previewUrl": "https://img.youtube.com/vi/cVRG4zYdUP0/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "wrightsville",
+    "sourceId": "worldbeachcams",
+    "beachId": "wrightsville-beach-north-carolina",
+    "name": "Johnnie Mercers Pier",
+    "path": "usa/north-carolina/johnnie-mercers-fishing-pier-north-webcam-nc-usa",
+    "previewUrl": "https://img.youtube.com/vi/yQG1M1GU_pI/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "jacksonville",
+    "sourceId": "worldbeachcams",
+    "beachId": "jacksonville-beach-florida",
+    "name": "Jacksonville Beach Pier",
+    "path": "usa/florida/jacksonville-beach-pier-webcam-north-and-south-fl-usa",
+    "previewUrl": "https://img.youtube.com/vi/bZ4uxyLqV-E/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "deerfield",
+    "sourceId": "worldbeachcams",
+    "beachId": "deerfield-beach-florida",
+    "name": "Deerfield Beach",
+    "path": "usa/florida/deerfield-beach-surf-cam-fl",
+    "previewUrl": "https://img.youtube.com/vi/hIeFPNHfuoY/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "st-augustine",
+    "sourceId": "worldbeachcams",
+    "beachId": "st-augustine-beach-florida",
+    "name": "St. Augustine Beach",
+    "path": "usa/florida/live-surf-station-pier-webcam-st-augustine-beach-fl-usa",
+    "previewUrl": "https://img.youtube.com/vi/Q6eZVkUKFxo/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "huntington",
+    "sourceId": "worldbeachcams",
+    "beachId": "huntington-beach-california",
+    "name": "Huntington Beach Pier",
+    "path": "usa/california/huntington-beach-pier-live-streaming-hd-camera-ca",
+    "previewUrl": "https://img.youtube.com/vi/mhQjsLBfOoY/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "pacifica",
+    "sourceId": "worldbeachcams",
+    "beachId": "pacifica-california",
+    "name": "Sharp Park Beach",
+    "path": "usa/california/live-webcam-sharp-park-beach-pacifica-ca-usa",
+    "previewUrl": "https://img.youtube.com/vi/UYu-TjvAVFs/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "south-padre",
+    "sourceId": "worldbeachcams",
+    "beachId": "south-padre-island-texas",
+    "name": "South Padre Island",
+    "path": "usa/texas/south-padre-island-surf-live-hd-webcam-texas-usa",
+    "previewUrl": "https://img.youtube.com/vi/0FaRaPPTS8M/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "surfside",
+    "sourceId": "worldbeachcams",
+    "beachId": "surfside-beach-south-carolina",
+    "name": "Surfside Beach",
+    "path": "usa/south-carolina/live-surfside-beach-webcam-in-south-carolina-usa",
+    "previewUrl": "https://img.youtube.com/vi/PdudbIiVIKQ/hqdefault.jpg",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-surf",
+    "sourceId": "visit-st-lucie",
+    "beachId": "fort-pierce-inlet-state-park-florida",
+    "name": "Fort Pierce Surf Cam",
+    "watchUrl": "https://visitstlucie.com/fort-pierce-inlet-webcam-surf/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2017/01/surfing.png",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "Hutchinson Island",
+      "North Hutchinson Island",
+      "beach",
+      "surf"
+    ],
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-beach",
+    "sourceId": "visit-st-lucie",
+    "beachId": "jetty-park-beach-fort-pierce-florida",
+    "name": "Fort Pierce Beach Cam",
+    "watchUrl": "https://visitstlucie.com/fort-pierce-inlet-webcam-jetty-beach/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2017/01/Jetty.jpg",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "Hutchinson Island",
+      "South Hutchinson Island",
+      "beach"
+    ],
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-jetty",
+    "sourceId": "visit-st-lucie",
+    "beachId": "jetty-park-beach-fort-pierce-florida",
+    "name": "Fort Pierce Jetty Cam",
+    "watchUrl": "https://visitstlucie.com/fort-pierce-inlet-webcam-and-jetty/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2024/07/Untitled-design-4.webp",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "Hutchinson Island",
+      "South Hutchinson Island",
+      "beach"
+    ],
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-inlet",
+    "sourceId": "visit-st-lucie",
+    "name": "Fort Pierce Inlet Cam",
+    "locality": "Fort Pierce Inlet",
+    "region": "Florida",
+    "country": "USA",
+    "latitude": 27.469948,
+    "longitude": -80.291907,
+    "watchUrl": "https://visitstlucie.com/fort-pierce-inlet-waterway/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2017/03/webcam-fort-pierce-inlet.png",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "Hutchinson Island",
+      "inlet"
+    ],
+    "availabilityNote": "Operator reports offline",
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-boardwalk",
+    "sourceId": "visit-st-lucie",
+    "name": "Boardwalk at The Port Cam",
+    "locality": "Port St. Lucie",
+    "region": "Florida",
+    "country": "USA",
+    "latitude": 27.276116,
+    "longitude": -80.319446,
+    "watchUrl": "https://visitstlucie.com/the-boardwalk-at-the-port/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2024/09/A317-Port-St-Lucie-Sunset-at-Saint-Lucie-Blvd-Bridge--scaled.jpg",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "St. Lucie River",
+      "Riverwalk"
+    ],
+    "checkedAt": "2026-10-23"
+  },
+  {
+    "id": "stlucie-marina",
+    "sourceId": "visit-st-lucie",
+    "name": "Fort Pierce Marina Cam",
+    "locality": "Fort Pierce City Marina",
+    "region": "Florida",
+    "country": "USA",
+    "latitude": 27.44973,
+    "longitude": -80.321659,
+    "watchUrl": "https://visitstlucie.com/fort-pierce-marina-webcam/",
+    "previewUrl": "https://visitstlucie.com/wp-content/uploads/2024/09/Photo-Mar-26-11-11-01-AM.jpg",
+    "searchTerms": [
+      "St. Lucie County",
+      "Saint Lucie",
+      "Port Saint Lucie",
+      "Port St Lucie",
+      "Treasure Coast",
+      "marina",
+      "waterfront"
+    ],
+    "availabilityNote": "Operator reports offline",
+    "checkedAt": "2026-10-23"
+  }
+]

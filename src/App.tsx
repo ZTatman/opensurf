@@ -1,6 +1,6 @@
 import { Button, Link, ListBox, Select } from '@heroui/react'
-import { useState } from 'react'
-import { beaches, cameras, provider, sourceUrl, type EmbeddedCamera } from './cameras'
+import { Fragment, useState } from 'react'
+import { beaches, cameras, sources, sourceUrl, type EmbeddedCamera } from './cameras'
 import { addCamera, filterCameras, beachSections, nearbyCameras, MAX_CAMERAS, readFavorites, writeFavorites } from './model'
 import CameraCarousel from './CameraCarousel'
 import CameraFilters from './CameraFilters'
@@ -197,8 +197,17 @@ export default function App() {
       </main>
 
       <footer className="mx-auto flex max-w-7xl flex-wrap gap-x-3 gap-y-1 px-4 py-6 text-xs text-muted sm:px-8">
-        <span>Public cameras from <Link className="text-xs text-muted" href="https://worldbeachcams.com/en" target="_blank" rel="noopener noreferrer">{provider.name}</Link> and <Link className="text-xs text-muted" href="https://visitstlucie.com/live-web-cams/" target="_blank" rel="noopener noreferrer">Visit St. Lucie</Link>.</span>
-        <Link className="text-xs text-muted" href={provider.terms} target="_blank" rel="noopener noreferrer">Embed terms</Link>
+        <span>Public cameras from {sources.map((source, index) => (
+          <Fragment key={source.id}>
+            {index === 0 ? '' : index === sources.length - 1 ? ' and ' : ', '}
+            <Link className="text-xs text-muted" href={source.homepage} target="_blank" rel="noopener noreferrer">{source.name}</Link>
+          </Fragment>
+        ))}.</span>
+        {sources.filter(source => source.terms).map(source => (
+          <Link key={source.id} className="text-xs text-muted" href={source.terms} target="_blank" rel="noopener noreferrer">
+            {source.name} terms
+          </Link>
+        ))}
         <span>Places: <Link className="text-xs text-muted" href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">GeoNames via Open-Meteo</Link>.</span>
         <span>Locations and distances are approximate.</span>
         <span>Search covers the listed sources. Some cameras open on the operator’s site. Availability varies; images may be cached or location photos.</span>

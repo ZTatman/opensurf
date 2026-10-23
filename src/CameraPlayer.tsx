@@ -1,7 +1,7 @@
 import { Button, Link } from '@heroui/react'
 import { ExternalLink, RotateCw, X } from 'lucide-react'
 import { useState } from 'react'
-import { embedUrl, provider, sourceUrl, type EmbeddedCamera } from './cameras'
+import { embedUrl, sourceUrl, type EmbeddedCamera } from './cameras'
 import ActionHint from './ActionHint'
 
 type CameraPlayerProps = {
@@ -52,7 +52,7 @@ export default function CameraPlayer({ camera, onRemove }: CameraPlayerProps) {
         />
       </div>
       <Link className="mt-2 text-xs text-muted" href={sourceUrl(camera)} target="_blank" rel="noopener noreferrer">
-        Powered by {provider.name}
+        Powered by {camera.sourceName}
       </Link>
     </article>
   )

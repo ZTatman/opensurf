@@ -1,0 +1,31 @@
+[
+  {
+    "id": "worldbeachcams",
+    "name": "Live Beach Cams",
+    "status": "approved",
+    "access": "embed",
+    "homepage": "https://worldbeachcams.com/en",
+    "terms": "https://worldbeachcams.com/en/terms",
+    "pageBase": "https://worldbeachcams.com/en/",
+    "embedBase": "https://worldbeachcams.com/embed/",
+    "notes": "Published terms permit free embeds with attribution."
+  },
+  {
+    "id": "visit-st-lucie",
+    "name": "Visit St. Lucie",
+    "status": "approved",
+    "access": "external",
+    "homepage": "https://visitstlucie.com/live-web-cams/",
+    "searchTerms": [
+      "Visit St Lucie",
+      "visitstlucie"
+    ],
+    "notes": "Vista Webcams players restrict embedding to approved domains (frame-ancestors). Link to the official camera pages; do not embed or proxy. See docs/research/visit-st-lucie.md."
+  },
+  {
+    "id": "openwebcamdb",
+    "name": "OpenWebcamDB",
+    "status": "rejected",
+    "notes": "Terms prohibit competing aggregators and redistribution."
+  }
+]

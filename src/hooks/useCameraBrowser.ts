@@ -2,7 +2,7 @@ import { useReducer } from 'react'
 import { beaches, type Camera } from '../cameras'
 import { beachSections, nearbyCameras, NEARBY_RADIUS_MILES } from '../lib/geo'
 import { filterCameras } from '../lib/search'
-import type { Place } from '../places'
+import type { Place } from '../services/geocoding'
 import { useNearby, type SearchArea } from './useNearby'
 
 export type Filters = { query: string; country: string; region: string; favoritesOnly: boolean }

@@ -6,7 +6,7 @@ import { filterCameras } from '../../lib/search'
 import { usePlaceSearch } from '../../hooks/usePlaceSearch'
 import type { Place } from '../../services/geocoding'
 
-type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; place?: Place }
+type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; cameraId?: string; place?: Place }
 type Props = {
   query: string
   onQueryChange: (query: string) => void
@@ -25,7 +25,7 @@ export default function BeachSearch({ query, onQueryChange, onWatch, onPlace, ha
     ...regions.filter(([region, country]) => `${region} ${country}`.toLocaleLowerCase().includes(term)).slice(0, 3)
       .map(([region, country]) => ({ id: `region:${region}`, label: region, detail: country, kind: 'region' as const })),
     ...filterCameras(cameras, { query }).slice(0, 4)
-      .map(camera => ({ id: `beach:${camera.id}`, label: camera.name, detail: `${camera.beach}, ${camera.region}${camera.playback === 'external' ? ` · Opens ${camera.sourceName}` : ''}`, external: camera.playback === 'external', kind: 'beach' as const })),
+      .map(camera => ({ id: `beach:${camera.id}`, label: camera.name, detail: `${camera.beach}, ${camera.region}${camera.playback === 'external' ? ` · Opens ${camera.sourceName}` : ''}`, external: camera.playback === 'external', kind: 'beach' as const, cameraId: camera.id })),
     ...(search?.places ?? []).map(place => ({ id: place.id, label: place.label, detail: 'Find cameras nearby', kind: 'place' as const, place })),
   ] : []
   const matches = selected?.label === query && !candidates.some(item => item.id === selected.id) ? [selected, ...candidates] : candidates
@@ -39,7 +39,7 @@ export default function BeachSearch({ query, onQueryChange, onWatch, onPlace, ha
         if (!match) return
         setSelected(match)
         onQueryChange(match.label)
-        if (match.kind === 'beach') onWatch(match.id.slice(6))
+        if (match.cameraId) onWatch(match.cameraId)
         if (match.place) onPlace(match.place)
       }}>
       <Label className="sr-only">Search beaches, cities or regions</Label>

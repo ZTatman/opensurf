@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Children, useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { IconButton } from './IconButton'
+import { scrollBehavior } from '../../lib/motion'
 
 type CarouselProps = {
   title: string
@@ -41,7 +42,7 @@ export default function Carousel({ title, description, label, children, empty, a
     if (!node) return
     node.scrollBy({
       left: direction * node.clientWidth * 0.85,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      behavior: scrollBehavior(),
     })
   }
 

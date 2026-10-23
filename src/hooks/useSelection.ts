@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { cameras, sourceUrl, type EmbeddedCamera } from '../cameras'
+import { scrollBehavior } from '../lib/motion'
 
 export const MAX_CAMERAS = 4
 
@@ -14,7 +15,7 @@ const cameraById = new Map(cameras.map(camera => [camera.id, camera]))
 export function revealPlayers() {
   requestAnimationFrame(() => {
     document.getElementById('watch-window')?.scrollIntoView({
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      behavior: scrollBehavior(),
       block: 'start',
     })
   })

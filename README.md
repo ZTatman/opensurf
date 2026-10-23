@@ -79,7 +79,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and every
 - **App checks**: `npm ci`, typecheck, lint, tests, and a production build, on the Node version in `.nvmrc`. Catalog problems (broken references, rejected sources, invalid coordinates, non-HTTPS links) fail the tests and build.
 - **Importer checks**: compiles `scripts/import-cameras.py` and runs `scripts/test_import_cameras.py`, which tests the catalog merge step offline. CI never fetches camera listings.
 
-`main` requires both checks to pass and changes to arrive through a pull request. Run the importer tests locally with `python3 -m unittest discover -s scripts -p 'test_*.py'`.
+Branch protection is not enabled: GitHub only offers it for private repositories on paid plans, so the checks report failures but do not block merges. Run the importer tests locally with `python3 -m unittest discover -s scripts -p 'test_*.py'`.
 
 ## License
 

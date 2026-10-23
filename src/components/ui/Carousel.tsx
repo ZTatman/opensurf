@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Children, useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { Children, isValidElement, useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { IconButton } from './IconButton'
+import { scrollBehavior } from '../../lib/motion'
 
 type CarouselProps = {
   title: string
@@ -18,7 +19,9 @@ export default function Carousel({ title, description, label, children, empty, a
   const headingId = useId()
   const trackId = useId()
   const track = useRef<HTMLDivElement>(null)
-  const count = Children.count(children)
+  const items = Children.toArray(children)
+  const count = items.length
+  const itemKeys = items.map(item => isValidElement(item) ? item.key : '').join('|')
   const [edges, setEdges] = useState({ previous: false, next: false })
   const syncEdges = useCallback(() => {
     const node = track.current
@@ -36,12 +39,17 @@ export default function Carousel({ title, description, label, children, empty, a
     return () => observer.disconnect()
   }, [syncEdges, count])
 
+  // Return to the first item whenever the set of items changes, such as after a filter or range change.
+  useEffect(() => {
+    track.current?.scrollTo({ left: 0 })
+  }, [itemKeys])
+
   function move(direction: number) {
     const node = track.current
     if (!node) return
     node.scrollBy({
       left: direction * node.clientWidth * 0.85,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      behavior: scrollBehavior(),
     })
   }
 

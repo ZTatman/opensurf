@@ -14,9 +14,6 @@ export type BrowserAction =
   | { type: 'located'; area: SearchArea }
   | { type: 'reset' }
 
-// Radius around a city chosen for Explore while the nearby row stays on the device location.
-const EXPLORE_PLACE_RADIUS_MILES = 25
-
 export const initialBrowserState: BrowserState = {
   query: '', country: '', region: '', favoritesOnly: false,
   radiusMiles: NEARBY_RADIUS_MILES, area: null, explorePlace: null,
@@ -67,7 +64,8 @@ export function browseResults(state: BrowserState, catalog: Camera[], favorites:
     regions: [...new Set(catalog.filter(camera => !country || camera.country === country).map(camera => camera.region))].sort(),
     nearby: sections.nearby.filter(({ camera }) => !favoritesOnly || favoriteIds.has(camera.id)),
     explore: explorePlace
-      ? nearbyCameras(explored, explorePlace, EXPLORE_PLACE_RADIUS_MILES)
+      // A city chosen while the device location is known uses the same range as the nearby row.
+      ? nearbyCameras(explored, explorePlace, radiusMiles)
       : explored.map(camera => ({ camera, distanceKm: undefined })),
     exploreQuery,
     hasFilters: !!(exploreQuery || explorePlace || country || region || favoritesOnly),

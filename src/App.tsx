@@ -38,7 +38,7 @@ export default function App() {
         <WatchGrid cameras={selection.viewing} onRemove={selection.remove} />
 
         <div id="camera-library" className="space-y-10 scroll-mt-40 sm:scroll-mt-28">
-          <CameraCarousel key={`nearby:${area?.label ?? 'unknown'}:${radiusMiles}:${favoritesOnly}`} title={nearbyTitle}
+          <CameraCarousel title={nearbyTitle}
             description={area ? `${nearby.length} beach cam${nearby.length === 1 ? '' : 's'} within ${radiusMiles} miles${area.kind === 'place' ? ' of this city' : ''}` : `Beaches within ${radiusMiles} miles of your location`}
             status={browser.locationError || (browser.locating ? 'Finding your location…' : '')}
             entries={nearby} actions={cameraActions}
@@ -49,8 +49,8 @@ export default function App() {
               <p>{browser.locating ? 'Allow location access in your browser to see nearby beaches.' : 'Search for a city to look nearby instead.'}</p>
             )} />
 
-          <CameraCarousel key={`explore:${area?.label ?? 'all'}:${radiusMiles}:${explorePlace?.id ?? ''}:${browser.exploreQuery}:${browser.country}:${browser.region}:${favoritesOnly}`} title="Explore"
-            description={explorePlace ? `${explore.length} beaches within 25 miles of ${explorePlace.name}` : hasFilters ? `${explore.length} matching beaches outside your nearby selection` : area ? 'Other beaches around the world' : 'Discover beaches around the world'}
+          <CameraCarousel title="Explore"
+            description={explorePlace ? `${explore.length} beaches within ${radiusMiles} miles of ${explorePlace.name}` : hasFilters ? `${explore.length} matching beaches outside your nearby selection` : area ? 'Other beaches around the world' : 'Discover beaches around the world'}
             entries={explore} actions={cameraActions}
             empty={hasFilters ? <>
               <p>No other beaches match these filters.</p>

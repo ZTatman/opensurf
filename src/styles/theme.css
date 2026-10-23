@@ -1,0 +1,34 @@
+/* HeroUI supplies component appearance, interaction states, and focus rings. */
+:root {
+  --font-sans: 'DM Sans', sans-serif;
+  --background: #eff5f5;
+  --foreground: #183d46;
+  --accent: #176c72;
+  --accent-foreground: #ffffff;
+  --default: #e0eeee;
+  --default-foreground: #183d46;
+  --surface: #ffffff;
+  --surface-foreground: #183d46;
+  --surface-secondary: #e0eeee;
+  --muted: #60797f;
+  --border: #ccdfdf;
+  --field-background: #ffffff;
+  --field-foreground: #183d46;
+  --field-border: #ccdfdf;
+  --field-border-width: 1px;
+  --link: #176c72;
+}
+
+@layer base {
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Manrope', sans-serif;
+  }
+}

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "pipeline",
+    "name": "Banzai Pipeline",
+    "beach": "Haleiwa",
+    "region": "Hawaii",
+    "country": "USA",
+    "path": "usa/hawaii/banzai-pipeline-hawaii"
+  },
+  {
+    "id": "avalon",
+    "name": "Avalon Fishing Pier",
+    "beach": "Avalon",
+    "region": "New Jersey",
+    "country": "USA",
+    "path": "usa/new-jersey/avalon-fishing-pier-nj"
+  },
+  {
+    "id": "bald-head",
+    "name": "Bald Head Island",
+    "beach": "Bald Head Island",
+    "region": "North Carolina",
+    "country": "USA",
+    "path": "usa/north-carolina/bald-head-island"
+  },
+  {
+    "id": "ocean-city",
+    "name": "Ocean City Boardwalk",
+    "beach": "Ocean City",
+    "region": "Maryland",
+    "country": "USA",
+    "path": "usa/maryland/atlantic-ave-live-hd-webcam-comfort-inn-boardwalk-ocean-city-usa"
+  },
+  {
+    "id": "anacapa",
+    "name": "Anacapa Island Cove",
+    "beach": "Anacapa Island",
+    "region": "California",
+    "country": "USA",
+    "path": "usa/california/anacapa-island-cove"
+  },
+  {
+    "id": "vlieland",
+    "name": "Badhuys Beach",
+    "beach": "Vlieland",
+    "region": "Friesland",
+    "country": "Netherlands",
+    "path": "netherlands/friesland/badhuys-vlieland-live-hd-webcam-oost-vlieland-netherlands"
+  },
+  {
+    "id": "bagni-miki",
+    "name": "Bagni Miki Beach",
+    "beach": "Chioggia",
+    "region": "Veneto",
+    "country": "Italy",
+    "path": "italy/veneto/bagni-miki-beach-cam-ve"
+  },
+  {
+    "id": "rincao",
+    "name": "Balneário Rincão",
+    "beach": "Balneário Rincão",
+    "region": "Santa Catarina",
+    "country": "Brazil",
+    "path": "brazil/santa-catarina/balneario-rincao-beach"
+  },
+  {
+    "id": "roquille",
+    "name": "Plage de la Roquille",
+    "beach": "Agde",
+    "region": "Occitania",
+    "country": "France",
+    "path": "france/occitania/agde-cap-plage-roquille-france"
+  },
+  {
+    "id": "krioneri",
+    "name": "Krioneri Beach",
+    "beach": "Agia Kyriaki",
+    "region": "Epirus",
+    "country": "Greece",
+    "path": "greece/epirus-and-western-macedonia/agia-kyriaki-krioneri-beach-panagia"
+  },
+  {
+    "id": "georgica",
+    "path": "usa/new-york/georgica-beach-east-hampton-ny",
+    "name": "Georgica Beach",
+    "beach": "East Hampton",
+    "region": "New York"
+  },
+  {
+    "id": "tobay",
+    "path": "usa/new-york/live-webcam-tobay-beach-oyster-bay-ny",
+    "name": "Tobay Beach",
+    "beach": "Oyster Bay",
+    "region": "New York"
+  },
+  {
+    "id": "rogers",
+    "path": "usa/new-york/rogers-beach-westhampton-ny",
+    "name": "Rogers Beach",
+    "beach": "Westhampton Beach",
+    "region": "New York"
+  },
+  {
+    "id": "sea-isle",
+    "path": "usa/new-jersey/live-sea-isle-city-beach-patrol-webcam-new-jersey-usa",
+    "name": "Sea Isle City Beach",
+    "beach": "Sea Isle City",
+    "region": "New Jersey"
+  },
+  {
+    "id": "ocean-city-nj",
+    "path": "usa/new-jersey/ocean-city-music-pier-nj",
+    "name": "Ocean City Music Pier",
+    "beach": "Ocean City",
+    "region": "New Jersey"
+  },
+  {
+    "id": "cahoon-hollow",
+    "path": "usa/massachusetts/live-cahoon-hollow-beach-webcam-wellfleet-ma-usa",
+    "name": "Cahoon Hollow Beach",
+    "beach": "Wellfleet",
+    "region": "Massachusetts"
+  },
+  {
+    "id": "salisbury",
+    "path": "usa/massachusetts/live-hd-webcam-in-salisbury-beach-ma-usa",
+    "name": "Salisbury Beach",
+    "beach": "Salisbury",
+    "region": "Massachusetts"
+  },
+  {
+    "id": "carolina-beach",
+    "path": "usa/north-carolina/carolina-beach-live-webcam-north-carolina-usa",
+    "name": "Carolina Beach",
+    "beach": "Carolina Beach",
+    "region": "North Carolina"
+  },
+  {
+    "id": "wrightsville",
+    "path": "usa/north-carolina/johnnie-mercers-fishing-pier-north-webcam-nc-usa",
+    "name": "Johnnie Mercers Pier",
+    "beach": "Wrightsville Beach",
+    "region": "North Carolina"
+  },
+  {
+    "id": "jacksonville",
+    "path": "usa/florida/jacksonville-beach-pier-webcam-north-and-south-fl-usa",
+    "name": "Jacksonville Beach Pier",
+    "beach": "Jacksonville Beach",
+    "region": "Florida"
+  },
+  {
+    "id": "deerfield",
+    "path": "usa/florida/deerfield-beach-surf-cam-fl",
+    "name": "Deerfield Beach",
+    "beach": "Deerfield Beach",
+    "region": "Florida"
+  },
+  {
+    "id": "st-augustine",
+    "path": "usa/florida/live-surf-station-pier-webcam-st-augustine-beach-fl-usa",
+    "name": "St. Augustine Beach",
+    "beach": "St. Augustine Beach",
+    "region": "Florida"
+  },
+  {
+    "id": "huntington",
+    "path": "usa/california/huntington-beach-pier-live-streaming-hd-camera-ca",
+    "name": "Huntington Beach Pier",
+    "beach": "Huntington Beach",
+    "region": "California"
+  },
+  {
+    "id": "pacifica",
+    "path": "usa/california/live-webcam-sharp-park-beach-pacifica-ca-usa",
+    "name": "Sharp Park Beach",
+    "beach": "Pacifica",
+    "region": "California"
+  },
+  {
+    "id": "south-padre",
+    "path": "usa/texas/south-padre-island-surf-live-hd-webcam-texas-usa",
+    "name": "South Padre Island",
+    "beach": "South Padre Island",
+    "region": "Texas"
+  },
+  {
+    "id": "surfside",
+    "path": "usa/south-carolina/live-surfside-beach-webcam-in-south-carolina-usa",
+    "name": "Surfside Beach",
+    "beach": "Surfside Beach",
+    "region": "South Carolina"
+  }
+]

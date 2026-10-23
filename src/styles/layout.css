@@ -1,0 +1,57 @@
+/* Only app-specific layout lives here. Controls are styled by HeroUI. */
+@layer components {
+  .camera-frame {
+    width: 100%;
+    min-height: 250px;
+    aspect-ratio: 16 / 10;
+    background: #102c32;
+  }
+
+  .camera-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .players-grid .camera-frame {
+    aspect-ratio: 16 / 11;
+  }
+
+  .camera-preview {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    background: var(--default);
+  }
+
+  .camera-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .beach-carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(16rem, 30vw, 21rem);
+    gap: 1.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    padding: 0.25rem 0.25rem 1rem;
+  }
+
+  .beach-carousel > article {
+    scroll-snap-align: start;
+  }
+
+  .beach-carousel:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+  }
+}

@@ -89,6 +89,12 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every pull request and every
 
 Branch protection is not enabled: GitHub only offers it for private repositories on paid plans, so the checks report failures but do not block merges. Run the importer tests locally with `python3 -m unittest discover -s scripts -p 'test_*.py'`.
 
+## Deployment
+
+The site is static and deploys to [Cloudflare Pages](https://pages.cloudflare.com/) from the CI workflow, only after both checks pass. Pushes to `main` deploy to production, and each pull request gets a preview URL posted as a comment. `public/_headers` sets basic security headers and long-term caching for fingerprinted assets.
+
+Deployment needs two repository secrets, `CLOUDFLARE_API_TOKEN` (an API token with the **Cloudflare Pages: Edit** permission) and `CLOUDFLARE_ACCOUNT_ID`. Until both exist, the deploy job is skipped with a notice. The first deploy creates the `opensurf` Pages project.
+
 ## License
 
 MIT for project-authored code. Camera video, previews, provider players, and third-party dependencies retain their owners' rights and terms. The app has not been deployed.

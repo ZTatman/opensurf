@@ -1,6 +1,7 @@
 import { useReducer } from 'react'
 import { beaches, type Camera } from '../cameras'
-import { beachSections, filterCameras, nearbyCameras, NEARBY_RADIUS_MILES } from '../model'
+import { beachSections, nearbyCameras, NEARBY_RADIUS_MILES } from '../lib/geo'
+import { filterCameras } from '../lib/search'
 import type { Place } from '../places'
 import { useNearby, type SearchArea } from './useNearby'
 
@@ -60,7 +61,7 @@ export function browseResults(state: BrowserState, catalog: Camera[], favorites:
   const selectedPlaceLabel = explorePlace?.label ?? (area?.kind === 'place' ? area.label : '')
   // The chosen city's label fills the search box but is not a text filter.
   const exploreQuery = query === selectedPlaceLabel ? '' : query
-  const explored = filterCameras(sections.explore, exploreQuery, country, favoritesOnly, favorites, region)
+  const explored = filterCameras(sections.explore, { query: exploreQuery, country, region, onlyIds: favoritesOnly ? favoriteIds : undefined })
   return {
     countries: [...new Set(catalog.map(camera => camera.country))].sort(),
     regions: [...new Set(catalog.filter(camera => !country || camera.country === country).map(camera => camera.region))].sort(),

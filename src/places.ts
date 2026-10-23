@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
 
-export type Coordinates = { latitude: number; longitude: number }
-export type Place = Coordinates & { id: string; label: string; name: string }
+import { validCoordinates, type Coordinates } from './lib/geo'
 
-export function validCoordinates(value: unknown): value is Coordinates {
-  if (!value || typeof value !== 'object') return false
-  const point = value as Coordinates
-  return Number.isFinite(point.latitude) && Math.abs(point.latitude) <= 90
-    && Number.isFinite(point.longitude) && Math.abs(point.longitude) <= 180
-}
+export type Place = Coordinates & { id: string; label: string; name: string }
 
 export async function searchPlaces(query: string, signal: AbortSignal): Promise<Place[]> {
   const url = new URL('https://geocoding-api.open-meteo.com/v1/search')

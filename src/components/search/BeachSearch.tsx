@@ -2,7 +2,7 @@ import { ComboBox, Input, Label, ListBox } from '@heroui/react'
 import { ExternalLink, MapPin, Search, Video } from 'lucide-react'
 import { useState } from 'react'
 import { beaches as cameras } from '../../cameras'
-import { filterCameras } from '../../model'
+import { filterCameras } from '../../lib/search'
 import { usePlaceSearch, type Place } from '../../places'
 
 type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; place?: Place }
@@ -23,7 +23,7 @@ export default function BeachSearch({ query, onQueryChange, onWatch, onPlace, ha
   const candidates: Suggestion[] = term && !hasSelectedPlace ? [
     ...regions.filter(([region, country]) => `${region} ${country}`.toLocaleLowerCase().includes(term)).slice(0, 3)
       .map(([region, country]) => ({ id: `region:${region}`, label: region, detail: country, kind: 'region' as const })),
-    ...filterCameras(cameras, query, '', false, []).slice(0, 4)
+    ...filterCameras(cameras, { query }).slice(0, 4)
       .map(camera => ({ id: `beach:${camera.id}`, label: camera.name, detail: `${camera.beach}, ${camera.region}${camera.playback === 'external' ? ` · Opens ${camera.sourceName}` : ''}`, external: camera.playback === 'external', kind: 'beach' as const })),
     ...(search?.places ?? []).map(place => ({ id: place.id, label: place.label, detail: 'Find cameras nearby', kind: 'place' as const, place })),
   ] : []

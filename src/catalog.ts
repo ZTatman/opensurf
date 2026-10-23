@@ -1,4 +1,4 @@
-import { validCoordinates } from './places'
+import { validCoordinates } from './lib/geo'
 
 // Records as stored in src/data/catalog. Beaches, cameras and sources are kept apart so one beach
 // can have several views and each source carries its own terms, attribution and access method.

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { cameras } from '../cameras'
-import { readFavorites, writeFavorites } from '../model'
+import { readFavorites, writeFavorites } from '../lib/favorites'
 
 const knownIds = cameras.map(camera => camera.id)
 const STORAGE_UNAVAILABLE = 'Favorites are saved for this visit. Browser storage is unavailable.'

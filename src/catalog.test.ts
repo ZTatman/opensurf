@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { buildCatalog, type BeachRecord, type CameraRecord, type SourceRecord } from './catalog'
-import { beaches, cameras, sources } from './cameras'
+import { beaches, cameras, embedUrl, sourceUrl, sources } from './cameras'
+import { validCoordinates } from './lib/geo'
 
 const embed: SourceRecord = { id: 'embed', name: 'Embed Source', status: 'approved', access: 'embed', pageBase: 'https://example.com/en/', embedBase: 'https://example.com/embed/', notes: '' }
 const external: SourceRecord = { id: 'external', name: 'Operator', status: 'approved', access: 'external', searchTerms: ['operator brand'], notes: '' }
@@ -41,6 +42,22 @@ describe('catalog records', () => {
 })
 
 describe('bundled catalog', () => {
+  it('has distinct IDs, valid coordinates, and HTTPS provider links', () => {
+    expect(new Set(cameras.map(camera => camera.id)).size).toBe(cameras.length)
+    for (const camera of cameras) {
+      expect(new URL(sourceUrl(camera)).protocol).toBe('https:')
+      if (camera.playback === 'embed') expect(new URL(embedUrl(camera)).origin).toBe('https://worldbeachcams.com')
+      else expect(new URL(sourceUrl(camera)).origin).toBe('https://visitstlucie.com')
+    }
+    expect(cameras.every(validCoordinates)).toBe(true)
+    expect(new Set(cameras.filter(camera => camera.playback === 'embed' && camera.path.startsWith('usa/')).map(camera => camera.country))).toEqual(new Set(['USA']))
+  })
+  it('keeps host-restricted players external and preserves operator offline notices', () => {
+    const official = cameras.filter(camera => camera.playback === 'external')
+    expect(official.every(camera => !('path' in camera))).toBe(true)
+    expect(official.filter(camera => camera.availabilityNote).map(camera => camera.id)).toEqual(['stlucie-inlet', 'stlucie-marina'])
+    expect(sourceUrl(official.find(camera => camera.id === 'stlucie-surf')!)).toBe('https://visitstlucie.com/fort-pierce-inlet-webcam-surf/')
+  })
   it('attributes only sources that supply cameras', () => {
     expect(sources.map(source => source.id)).toEqual(['worldbeachcams', 'visit-st-lucie'])
     expect(cameras.every(camera => sources.some(source => source.id === camera.sourceId))).toBe(true)

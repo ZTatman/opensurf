@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { cameras, sourceUrl, type EmbeddedCamera } from '../cameras'
-import { addCamera, MAX_CAMERAS } from '../model'
+
+export const MAX_CAMERAS = 4
+
+// Adds a camera unless it is already selected or the grid is full.
+export function addCamera(selected: string[], id: string) {
+  if (selected.includes(id) || selected.length >= MAX_CAMERAS) return selected
+  return [...selected, id]
+}
 
 const cameraById = new Map(cameras.map(camera => [camera.id, camera]))
 

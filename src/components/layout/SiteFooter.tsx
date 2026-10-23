@@ -1,6 +1,6 @@
 import { Link } from '@heroui/react'
 import { Fragment } from 'react'
-import { sources } from '../../cameras'
+import { beachIndexSource, sources } from '../../cameras'
 
 const footerLink = 'text-xs text-muted'
 
@@ -18,6 +18,7 @@ export default function SiteFooter() {
           {source.name} terms
         </Link>
       ))}
+      <span>Beach locations: <Link className={footerLink} href={beachIndexSource.homepage} target="_blank" rel="noopener noreferrer">{beachIndexSource.name}</Link> BEACH Act data.</span>
       <span>Places: <Link className={footerLink} href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener noreferrer">GeoNames via Open-Meteo</Link>.</span>
       <span>Locations and distances are approximate.</span>
       <span>Search covers the listed sources. Some cameras open on the operator’s site. Availability varies; images may be cached or location photos.</span>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { buildCatalog, type BeachRecord, type CameraRecord, type SourceRecord } from './catalog'
-import { beaches, cameras, embedUrl, sourceUrl, sources } from './cameras'
+import { buildBeachIndex, buildCatalog, type BeachRecord, type CameraRecord, type IndexBeachRecord, type SourceRecord } from './catalog'
+import { beaches, cameras, embedUrl, loadBeachIndex, sourceUrl, sources } from './cameras'
 import { validCoordinates } from './lib/geo'
 
 const embed: SourceRecord = { id: 'embed', name: 'Embed Source', status: 'approved', access: 'embed', pageBase: 'https://example.com/en/', embedBase: 'https://example.com/embed/', notes: '' }
@@ -65,5 +65,25 @@ describe('bundled catalog', () => {
   it('groups the St. Lucie beach and jetty views under one beach', () => {
     const jetty = beaches.filter(camera => camera.beachId === 'jetty-park-beach-fort-pierce-florida').map(camera => camera.id)
     expect(jetty).toEqual(['stlucie-beach', 'stlucie-jetty'])
+  })
+})
+
+describe('beach index', () => {
+  const indexed = (fields: Partial<IndexBeachRecord>): IndexBeachRecord => ({ id: 'south-beach-florida', name: 'South Beach', region: 'Florida', latitude: 25.78, longitude: -80.13, epaIds: ['FL1'], ...fields })
+  it('lists index beaches that no curated beach covers', () => {
+    const listed = buildBeachIndex([{ ...beach, externalIds: ['epa:FL2'] }], [indexed({}), indexed({ id: 'jetty', epaIds: ['FL2', 'FL3'] })])
+    expect(listed).toEqual([{ id: 'south-beach-florida', name: 'South Beach', region: 'Florida', country: 'USA', latitude: 25.78, longitude: -80.13 }])
+  })
+  it('rejects stale links, duplicates, and bad coordinates', () => {
+    expect(() => buildBeachIndex([{ ...beach, externalIds: ['epa:FL9'] }], [indexed({})])).toThrow('epa:FL9 is not in the index')
+    expect(() => buildBeachIndex([], [indexed({}), indexed({})])).toThrow('duplicate index beach')
+    expect(() => buildBeachIndex([], [indexed({ latitude: 91 })])).toThrow('invalid coordinates')
+    expect(() => buildBeachIndex([{ ...beach, id: 'south-beach-florida' }], [indexed({})])).toThrow('duplicates a curated beach ID')
+  })
+  it('loads the bundled EPA index with every curated link resolved', async () => {
+    const index = await loadBeachIndex()
+    expect(index.length).toBeGreaterThan(5000)
+    expect(index.some(entry => entry.id === 'jetty-park-beach-florida')).toBe(false)
+    expect(index.every(validCoordinates)).toBe(true)
   })
 })

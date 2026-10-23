@@ -5,7 +5,10 @@
     "region": "Hawaii",
     "country": "USA",
     "latitude": 21.665019,
-    "longitude": -158.050805
+    "longitude": -158.050805,
+    "externalIds": [
+      "epa:HI188157"
+    ]
   },
   {
     "id": "avalon-new-jersey",
@@ -13,7 +16,27 @@
     "region": "New Jersey",
     "country": "USA",
     "latitude": 39.091889,
-    "longitude": -74.717949
+    "longitude": -74.717949,
+    "externalIds": [
+      "epa:NJ091051",
+      "epa:NJ091111",
+      "epa:NJ091156",
+      "epa:NJ091168",
+      "epa:NJ091178",
+      "epa:NJ091189",
+      "epa:NJ091190",
+      "epa:NJ091191",
+      "epa:NJ091192",
+      "epa:NJ091246",
+      "epa:NJ091255",
+      "epa:NJ091261",
+      "epa:NJ091265",
+      "epa:NJ504553",
+      "epa:NJ613883",
+      "epa:NJ644153",
+      "epa:NJ892810",
+      "epa:NJ981421"
+    ]
   },
   {
     "id": "bald-head-island-north-carolina",
@@ -21,7 +44,12 @@
     "region": "North Carolina",
     "country": "USA",
     "latitude": 33.85825,
-    "longitude": -78.001389
+    "longitude": -78.001389,
+    "externalIds": [
+      "epa:NC191050",
+      "epa:NC569455",
+      "epa:NC895384"
+    ]
   },
   {
     "id": "ocean-city-maryland",
@@ -29,7 +57,15 @@
     "region": "Maryland",
     "country": "USA",
     "latitude": 38.3394981872385,
-    "longitude": -75.0827446837875
+    "longitude": -75.0827446837875,
+    "externalIds": [
+      "epa:MD193259",
+      "epa:MD451365",
+      "epa:MD572862",
+      "epa:MD750554",
+      "epa:MD900476",
+      "epa:MD961400"
+    ]
   },
   {
     "id": "anacapa-island-california",
@@ -85,7 +121,10 @@
     "region": "New York",
     "country": "USA",
     "latitude": 40.935862,
-    "longitude": -72.214799
+    "longitude": -72.214799,
+    "externalIds": [
+      "epa:NY674766"
+    ]
   },
   {
     "id": "oyster-bay-new-york",
@@ -93,7 +132,11 @@
     "region": "New York",
     "country": "USA",
     "latitude": 40.611420751698,
-    "longitude": -73.4342164837477
+    "longitude": -73.4342164837477,
+    "externalIds": [
+      "epa:NY610050",
+      "epa:NY955391"
+    ]
   },
   {
     "id": "westhampton-beach-new-york",
@@ -101,7 +144,10 @@
     "region": "New York",
     "country": "USA",
     "latitude": 40.799318,
-    "longitude": -72.626584
+    "longitude": -72.626584,
+    "externalIds": [
+      "epa:NY916006"
+    ]
   },
   {
     "id": "sea-isle-city-new-jersey",
@@ -109,7 +155,25 @@
     "region": "New Jersey",
     "country": "USA",
     "latitude": 39.1550601313398,
-    "longitude": -74.6917232872626
+    "longitude": -74.6917232872626,
+    "externalIds": [
+      "epa:NJ091107",
+      "epa:NJ091108",
+      "epa:NJ091166",
+      "epa:NJ091177",
+      "epa:NJ091185",
+      "epa:NJ091186",
+      "epa:NJ091187",
+      "epa:NJ091188",
+      "epa:NJ091316",
+      "epa:NJ091323",
+      "epa:NJ091327",
+      "epa:NJ091333",
+      "epa:NJ743141",
+      "epa:NJ854953",
+      "epa:NJ895042",
+      "epa:NJ966146"
+    ]
   },
   {
     "id": "ocean-city-new-jersey",
@@ -117,7 +181,30 @@
     "region": "New Jersey",
     "country": "USA",
     "latitude": 39.275645,
-    "longitude": -74.569731
+    "longitude": -74.569731,
+    "externalIds": [
+      "epa:NJ091101",
+      "epa:NJ091103",
+      "epa:NJ091104",
+      "epa:NJ091105",
+      "epa:NJ091160",
+      "epa:NJ091162",
+      "epa:NJ091181",
+      "epa:NJ091182",
+      "epa:NJ091183",
+      "epa:NJ091184",
+      "epa:NJ091371",
+      "epa:NJ091382",
+      "epa:NJ091386",
+      "epa:NJ182686",
+      "epa:NJ295946",
+      "epa:NJ439898",
+      "epa:NJ761133",
+      "epa:NJ797393",
+      "epa:NJ833075",
+      "epa:NJ870108",
+      "epa:NJ966108"
+    ]
   },
   {
     "id": "wellfleet-massachusetts",
@@ -125,7 +212,10 @@
     "region": "Massachusetts",
     "country": "USA",
     "latitude": 41.948708180306,
-    "longitude": -70.0012258410619
+    "longitude": -70.0012258410619,
+    "externalIds": [
+      "epa:MA523978"
+    ]
   },
   {
     "id": "salisbury-massachusetts",
@@ -133,7 +223,10 @@
     "region": "Massachusetts",
     "country": "USA",
     "latitude": 42.8434109791573,
-    "longitude": -70.8183646835935
+    "longitude": -70.8183646835935,
+    "externalIds": [
+      "epa:MA822629"
+    ]
   },
   {
     "id": "carolina-beach-north-carolina",
@@ -141,7 +234,14 @@
     "region": "North Carolina",
     "country": "USA",
     "latitude": 34.031087726195,
-    "longitude": -77.8953329482446
+    "longitude": -77.8953329482446,
+    "externalIds": [
+      "epa:NC616697",
+      "epa:NC796965",
+      "epa:NC813450",
+      "epa:NC853733",
+      "epa:NC939344"
+    ]
   },
   {
     "id": "wrightsville-beach-north-carolina",
@@ -149,7 +249,17 @@
     "region": "North Carolina",
     "country": "USA",
     "latitude": 34.2143174166175,
-    "longitude": -77.7907226839977
+    "longitude": -77.7907226839977,
+    "externalIds": [
+      "epa:NC230511",
+      "epa:NC294779",
+      "epa:NC349062",
+      "epa:NC547001",
+      "epa:NC632805",
+      "epa:NC748601",
+      "epa:NC771581",
+      "epa:NC773758"
+    ]
   },
   {
     "id": "jacksonville-beach-florida",
@@ -165,7 +275,10 @@
     "region": "Florida",
     "country": "USA",
     "latitude": 26.317123,
-    "longitude": -80.075317
+    "longitude": -80.075317,
+    "externalIds": [
+      "epa:FL968060"
+    ]
   },
   {
     "id": "st-augustine-beach-florida",
@@ -173,7 +286,10 @@
     "region": "Florida",
     "country": "USA",
     "latitude": 29.8580056342205,
-    "longitude": -81.2678910484802
+    "longitude": -81.2678910484802,
+    "externalIds": [
+      "epa:FL192350"
+    ]
   },
   {
     "id": "huntington-beach-california",
@@ -181,7 +297,10 @@
     "region": "California",
     "country": "USA",
     "latitude": 33.6565674458291,
-    "longitude": -118.004837048822
+    "longitude": -118.004837048822,
+    "externalIds": [
+      "epa:CA696385"
+    ]
   },
   {
     "id": "pacifica-california",
@@ -189,7 +308,10 @@
     "region": "California",
     "country": "USA",
     "latitude": 37.6324764281049,
-    "longitude": -122.496160883785
+    "longitude": -122.496160883785,
+    "externalIds": [
+      "epa:CA900091"
+    ]
   },
   {
     "id": "south-padre-island-texas",
@@ -197,7 +319,10 @@
     "region": "Texas",
     "country": "USA",
     "latitude": 26.0763628018663,
-    "longitude": -97.1604666838895
+    "longitude": -97.1604666838895,
+    "externalIds": [
+      "epa:TX868582"
+    ]
   },
   {
     "id": "surfside-beach-south-carolina",
@@ -205,7 +330,10 @@
     "region": "South Carolina",
     "country": "USA",
     "latitude": 33.6052454411986,
-    "longitude": -78.9741529229631
+    "longitude": -78.9741529229631,
+    "externalIds": [
+      "epa:SC447706"
+    ]
   },
   {
     "id": "fort-pierce-inlet-state-park-florida",
@@ -213,7 +341,11 @@
     "region": "Florida",
     "country": "USA",
     "latitude": 27.48544,
-    "longitude": -80.303179
+    "longitude": -80.303179,
+    "externalIds": [
+      "epa:FL299390",
+      "epa:FL404972"
+    ]
   },
   {
     "id": "jetty-park-beach-fort-pierce-florida",
@@ -221,6 +353,9 @@
     "region": "Florida",
     "country": "USA",
     "latitude": 27.469948,
-    "longitude": -80.291907
+    "longitude": -80.291907,
+    "externalIds": [
+      "epa:FL331275"
+    ]
   }
 ]

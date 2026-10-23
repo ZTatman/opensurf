@@ -23,7 +23,23 @@ export type BeachRecord = {
   latitude: number
   longitude: number
   aliases?: string[]
+  // Matching records in imported indexes, such as "epa:FL123456", so they are not listed twice.
+  externalIds?: string[]
 }
+
+// One beach from the generated EPA index (src/data/catalog/beaches-epa.json), merged from its monitoring segments.
+export type IndexBeachRecord = {
+  id: string
+  name: string
+  county?: string
+  region: string
+  latitude: number
+  longitude: number
+  epaIds: string[]
+}
+
+// A searchable beach that has no camera in the catalog.
+export type IndexedBeach = Omit<IndexBeachRecord, 'epaIds'> & { country: string }
 
 // Cameras without a beach (inlets, marinas, river views) carry their own locality and coordinates.
 // Cameras on a beach inherit its coordinates unless they set their own.
@@ -138,3 +154,25 @@ export function buildCatalog(sources: SourceRecord[], beaches: BeachRecord[], ca
   if (errors.length) throw new Error(`Invalid camera catalog:\n${errors.join('\n')}`)
   return joined
 }
+
+// Lists index beaches that no curated beach already covers. Throws if a curated link points at an
+// EPA segment that is no longer in the index, so a refresh cannot silently break links.
+export function buildBeachIndex(curated: BeachRecord[], index: IndexBeachRecord[]): IndexedBeach[] {
+  const errors = [
+    ...duplicates(index).map(id => `duplicate index beach ${id}`),
+    ...index.flatMap(({ id, ...point }) => validCoordinates(point) ? [] : [`index beach ${id}: invalid coordinates`]),
+  ]
+  const known = new Set(index.flatMap(beach => beach.epaIds.map(id => `epa:${id}`)))
+  const linked = new Set(curated.flatMap(beach => beach.externalIds ?? []))
+  for (const beach of curated) {
+    for (const id of beach.externalIds ?? []) if (!known.has(id)) errors.push(`beach ${beach.id}: ${id} is not in the index`)
+  }
+  const curatedIds = new Set(curated.map(beach => beach.id))
+  const listed = index.filter(beach => !beach.epaIds.some(id => linked.has(`epa:${id}`)))
+  errors.push(...listed.filter(beach => curatedIds.has(beach.id)).map(beach => `index beach ${beach.id} duplicates a curated beach ID`))
+  if (errors.length) throw new Error(`Invalid beach index:\n${errors.join('\n')}`)
+  return listed.map(({ id, name, county, region, latitude, longitude }) => ({
+    id, name, ...(county ? { county } : {}), region, country: 'USA', latitude, longitude,
+  }))
+}
+

@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest'
-import { startLocationRequest } from './location'
+import { requestLocation, startLocationRequest } from './geolocation'
 
 afterEach(() => vi.useRealTimers())
 
@@ -43,4 +43,18 @@ it('offers a fallback when automatic geolocation is unavailable', async () => {
   expect(error.mock.calls[0][0].message).toContain('Search for a city')
   expect(success).not.toHaveBeenCalled()
   cleanup()
+})
+
+it('gets a location on demand with bounded wait and handles denied permission', async () => {
+  const getCurrentPosition = vi.fn<Geolocation['getCurrentPosition']>((success) => {
+    success({ coords: { latitude: 42, longitude: -71 } } as GeolocationPosition)
+  })
+  expect(await requestLocation({ getCurrentPosition })).toEqual({ latitude: 42, longitude: -71 })
+  expect(getCurrentPosition.mock.calls[0][2]).toEqual({ enableHighAccuracy: false, timeout: 12_000, maximumAge: 300_000 })
+  getCurrentPosition.mockImplementationOnce((_success, error) => error?.({ code: 1 } as GeolocationPositionError))
+  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('Location access is off')
+  getCurrentPosition.mockImplementationOnce((_success, error) => error?.({ code: 3 } as GeolocationPositionError))
+  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('try again')
+  getCurrentPosition.mockImplementationOnce(success => success({ coords: { latitude: NaN, longitude: 0 } } as GeolocationPosition))
+  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('could not be found')
 })

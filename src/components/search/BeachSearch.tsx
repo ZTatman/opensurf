@@ -3,7 +3,8 @@ import { ExternalLink, MapPin, Search, Video } from 'lucide-react'
 import { useState } from 'react'
 import { beaches as cameras } from '../../cameras'
 import { filterCameras } from '../../lib/search'
-import { usePlaceSearch, type Place } from '../../places'
+import { usePlaceSearch } from '../../hooks/usePlaceSearch'
+import type { Place } from '../../services/geocoding'
 
 type Suggestion = { id: string; label: string; detail: string; kind: 'beach' | 'region' | 'place'; external?: boolean; place?: Place }
 type Props = {

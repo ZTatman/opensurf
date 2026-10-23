@@ -1,6 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest'
-import { requestLocation } from './location'
-import { searchPlaces } from './places'
+import { cachedPlaces, cachePlaces, searchPlaces } from './geocoding'
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -36,21 +35,6 @@ it('handles empty results, service errors, malformed responses, and aborts', asy
 })
 
 
-it('gets a location on demand with bounded wait and handles denied permission', async () => {
-  const getCurrentPosition = vi.fn<Geolocation['getCurrentPosition']>((success) => {
-    success({ coords: { latitude: 42, longitude: -71 } } as GeolocationPosition)
-  })
-  expect(await requestLocation({ getCurrentPosition })).toEqual({ latitude: 42, longitude: -71 })
-  expect(getCurrentPosition.mock.calls[0][2]).toEqual({ enableHighAccuracy: false, timeout: 12_000, maximumAge: 300_000 })
-  getCurrentPosition.mockImplementationOnce((_success, error) => error?.({ code: 1 } as GeolocationPositionError))
-  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('Location access is off')
-  getCurrentPosition.mockImplementationOnce((_success, error) => error?.({ code: 3 } as GeolocationPositionError))
-  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('try again')
-  getCurrentPosition.mockImplementationOnce(success => success({ coords: { latitude: NaN, longitude: 0 } } as GeolocationPosition))
-  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow('could not be found')
-})
-
-
 it('recognizes local city abbreviations accepted by the catalog', async () => {
   const fetchMock = vi.fn<typeof fetch>(async () => new Response('{}'))
   vi.stubGlobal('fetch', fetchMock)
@@ -62,4 +46,13 @@ it('recognizes local city abbreviations accepted by the catalog', async () => {
     await searchPlaces(query, new AbortController().signal)
     expect((fetchMock.mock.lastCall?.[0] as URL).searchParams.get('name')).toBe(expected)
   }
+})
+
+it('caches recent results case-insensitively and evicts the oldest', () => {
+  const place = { id: 'place:1', name: 'Boston', label: 'Boston, Massachusetts, United States', latitude: 42.36, longitude: -71.06 }
+  cachePlaces('Boston', [place])
+  expect(cachedPlaces(' boston ')).toEqual([place])
+  for (let index = 0; index < 40; index++) cachePlaces(`query ${index}`, [])
+  expect(cachedPlaces('Boston')).toBeUndefined()
+  expect(cachedPlaces('query 39')).toEqual([])
 })

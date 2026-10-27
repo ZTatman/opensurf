@@ -6,9 +6,7 @@
     "country": "USA",
     "latitude": 21.665019,
     "longitude": -158.050805,
-    "externalIds": [
-      "epa:HI188157"
-    ]
+    "externalIds": ["epa:HI188157"]
   },
   {
     "id": "avalon-new-jersey",
@@ -45,11 +43,7 @@
     "country": "USA",
     "latitude": 33.85825,
     "longitude": -78.001389,
-    "externalIds": [
-      "epa:NC191050",
-      "epa:NC569455",
-      "epa:NC895384"
-    ]
+    "externalIds": ["epa:NC191050", "epa:NC569455", "epa:NC895384"]
   },
   {
     "id": "ocean-city-maryland",
@@ -122,9 +116,7 @@
     "country": "USA",
     "latitude": 40.935862,
     "longitude": -72.214799,
-    "externalIds": [
-      "epa:NY674766"
-    ]
+    "externalIds": ["epa:NY674766"]
   },
   {
     "id": "oyster-bay-new-york",
@@ -133,10 +125,7 @@
     "country": "USA",
     "latitude": 40.611420751698,
     "longitude": -73.4342164837477,
-    "externalIds": [
-      "epa:NY610050",
-      "epa:NY955391"
-    ]
+    "externalIds": ["epa:NY610050", "epa:NY955391"]
   },
   {
     "id": "westhampton-beach-new-york",
@@ -145,9 +134,7 @@
     "country": "USA",
     "latitude": 40.799318,
     "longitude": -72.626584,
-    "externalIds": [
-      "epa:NY916006"
-    ]
+    "externalIds": ["epa:NY916006"]
   },
   {
     "id": "sea-isle-city-new-jersey",
@@ -213,9 +200,7 @@
     "country": "USA",
     "latitude": 41.948708180306,
     "longitude": -70.0012258410619,
-    "externalIds": [
-      "epa:MA523978"
-    ]
+    "externalIds": ["epa:MA523978"]
   },
   {
     "id": "salisbury-massachusetts",
@@ -224,9 +209,7 @@
     "country": "USA",
     "latitude": 42.8434109791573,
     "longitude": -70.8183646835935,
-    "externalIds": [
-      "epa:MA822629"
-    ]
+    "externalIds": ["epa:MA822629"]
   },
   {
     "id": "carolina-beach-north-carolina",
@@ -235,13 +218,7 @@
     "country": "USA",
     "latitude": 34.031087726195,
     "longitude": -77.8953329482446,
-    "externalIds": [
-      "epa:NC616697",
-      "epa:NC796965",
-      "epa:NC813450",
-      "epa:NC853733",
-      "epa:NC939344"
-    ]
+    "externalIds": ["epa:NC616697", "epa:NC796965", "epa:NC813450", "epa:NC853733", "epa:NC939344"]
   },
   {
     "id": "wrightsville-beach-north-carolina",
@@ -276,9 +253,7 @@
     "country": "USA",
     "latitude": 26.317123,
     "longitude": -80.075317,
-    "externalIds": [
-      "epa:FL968060"
-    ]
+    "externalIds": ["epa:FL968060"]
   },
   {
     "id": "st-augustine-beach-florida",
@@ -287,9 +262,7 @@
     "country": "USA",
     "latitude": 29.8580056342205,
     "longitude": -81.2678910484802,
-    "externalIds": [
-      "epa:FL192350"
-    ]
+    "externalIds": ["epa:FL192350"]
   },
   {
     "id": "huntington-beach-california",
@@ -298,9 +271,7 @@
     "country": "USA",
     "latitude": 33.6565674458291,
     "longitude": -118.004837048822,
-    "externalIds": [
-      "epa:CA696385"
-    ]
+    "externalIds": ["epa:CA696385"]
   },
   {
     "id": "pacifica-california",
@@ -309,9 +280,7 @@
     "country": "USA",
     "latitude": 37.6324764281049,
     "longitude": -122.496160883785,
-    "externalIds": [
-      "epa:CA900091"
-    ]
+    "externalIds": ["epa:CA900091"]
   },
   {
     "id": "south-padre-island-texas",
@@ -320,9 +289,7 @@
     "country": "USA",
     "latitude": 26.0763628018663,
     "longitude": -97.1604666838895,
-    "externalIds": [
-      "epa:TX868582"
-    ]
+    "externalIds": ["epa:TX868582"]
   },
   {
     "id": "surfside-beach-south-carolina",
@@ -331,9 +298,7 @@
     "country": "USA",
     "latitude": 33.6052454411986,
     "longitude": -78.9741529229631,
-    "externalIds": [
-      "epa:SC447706"
-    ]
+    "externalIds": ["epa:SC447706"]
   },
   {
     "id": "fort-pierce-inlet-state-park-florida",
@@ -342,10 +307,7 @@
     "country": "USA",
     "latitude": 27.48544,
     "longitude": -80.303179,
-    "externalIds": [
-      "epa:FL299390",
-      "epa:FL404972"
-    ]
+    "externalIds": ["epa:FL299390", "epa:FL404972"]
   },
   {
     "id": "jetty-park-beach-fort-pierce-florida",
@@ -354,8 +316,6 @@
     "country": "USA",
     "latitude": 27.469948,
     "longitude": -80.291907,
-    "externalIds": [
-      "epa:FL331275"
-    ]
+    "externalIds": ["epa:FL331275"]
   }
 ]

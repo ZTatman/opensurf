@@ -16,10 +16,7 @@
     "status": "approved",
     "access": "external",
     "homepage": "https://visitstlucie.com/live-web-cams/",
-    "searchTerms": [
-      "Visit St Lucie",
-      "visitstlucie"
-    ],
+    "searchTerms": ["Visit St Lucie", "visitstlucie"],
     "notes": "Vista Webcams players restrict embedding to approved domains (frame-ancestors). Link to the official camera pages; do not embed or proxy. See docs/research/visit-st-lucie.md."
   },
   {

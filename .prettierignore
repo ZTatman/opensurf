@@ -1,0 +1,6 @@
+dist
+.rea
+.playwright-mcp
+node_modules
+*.tsbuildinfo
+.DS_Store

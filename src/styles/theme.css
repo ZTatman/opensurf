@@ -1,6 +1,6 @@
 /* HeroUI supplies component appearance, interaction states, and focus rings. */
 :root {
-  --font-sans: 'DM Sans', sans-serif;
+  --font-sans: "DM Sans", sans-serif;
   --background: #eff5f5;
   --foreground: #183d46;
   --accent: #176c72;
@@ -28,7 +28,9 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3 {
-    font-family: 'Manrope', sans-serif;
+  h1,
+  h2,
+  h3 {
+    font-family: "Manrope", sans-serif;
   }
 }

@@ -1,10 +1,10 @@
-import { Tooltip } from '@heroui/react'
-import type { ReactElement } from 'react'
+import { Tooltip } from "@heroui/react";
+import type { ReactElement } from "react";
 
 type ActionHintProps = {
-  label: string
-  children: ReactElement
-}
+  label: string;
+  children: ReactElement;
+};
 
 export default function ActionHint({ label, children }: ActionHintProps) {
   return (
@@ -12,5 +12,5 @@ export default function ActionHint({ label, children }: ActionHintProps) {
       {children}
       <Tooltip.Content>{label}</Tooltip.Content>
     </Tooltip>
-  )
+  );
 }

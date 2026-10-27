@@ -6,14 +6,14 @@ The earlier nearby implementation only searched the 26-entry bundled directory. 
 
 ## Official camera pages
 
-| Listing | Official URL | Public script stream identifier |
-| --- | --- | --- |
-| Fort Pierce Surf | https://visitstlucie.com/fort-pierce-inlet-webcam-surf/ | BBD9QCDZ4L |
-| Fort Pierce Beach | https://visitstlucie.com/fort-pierce-inlet-webcam-jetty-beach/ | OQAKWAR14M |
-| Fort Pierce Jetty | https://visitstlucie.com/fort-pierce-inlet-webcam-and-jetty/ | CQ3CJMGV53 |
-| Fort Pierce Inlet | https://visitstlucie.com/fort-pierce-inlet-waterway/ | B5CQNN6U78 |
-| Boardwalk at The Port | https://visitstlucie.com/the-boardwalk-at-the-port/ | 611HI3YFI1 |
-| Fort Pierce Marina | https://visitstlucie.com/fort-pierce-marina-webcam/ | SQC5HPGJDY |
+| Listing               | Official URL                                                   | Public script stream identifier |
+| --------------------- | -------------------------------------------------------------- | ------------------------------- |
+| Fort Pierce Surf      | https://visitstlucie.com/fort-pierce-inlet-webcam-surf/        | BBD9QCDZ4L                      |
+| Fort Pierce Beach     | https://visitstlucie.com/fort-pierce-inlet-webcam-jetty-beach/ | OQAKWAR14M                      |
+| Fort Pierce Jetty     | https://visitstlucie.com/fort-pierce-inlet-webcam-and-jetty/   | CQ3CJMGV53                      |
+| Fort Pierce Inlet     | https://visitstlucie.com/fort-pierce-inlet-waterway/           | B5CQNN6U78                      |
+| Boardwalk at The Port | https://visitstlucie.com/the-boardwalk-at-the-port/            | 611HI3YFI1                      |
+| Fort Pierce Marina    | https://visitstlucie.com/fort-pierce-marina-webcam/            | SQC5HPGJDY                      |
 
 The official index https://visitstlucie.com/live-web-cams/ supplies the display photos and source page links. Photos are hotlinked as location images, and are not labeled as live previews. Inlet and Marina source pages explicitly report a temporary outage; these records retain an operator-reported-offline note. No claim is made that every listed camera is currently live.
 

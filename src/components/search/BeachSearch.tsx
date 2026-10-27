@@ -16,6 +16,7 @@ type Suggestion = {
   cameraId?: string;
   place?: Place;
 };
+
 type Props = {
   query: string;
   onQueryChange: (query: string) => void;
@@ -23,6 +24,7 @@ type Props = {
   onPlace: (place: Place) => void;
   hasSelectedPlace: boolean;
 };
+
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
 
 export default function BeachSearch({

@@ -10,10 +10,10 @@ export function validCoordinates(value: unknown): value is Coordinates {
   if (!value || typeof value !== "object") return false;
   const point = value as Coordinates;
   return (
-    Number.isFinite(point.latitude) &&
-    Math.abs(point.latitude) <= 90 &&
-    Number.isFinite(point.longitude) &&
-    Math.abs(point.longitude) <= 180
+    (Number.isFinite(point.latitude) &&
+      Math.abs(point.latitude) <= 90) &&
+    (Number.isFinite(point.longitude) &&
+      Math.abs(point.longitude) <= 180)
   );
 }
 

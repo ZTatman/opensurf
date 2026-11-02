@@ -108,10 +108,12 @@ function duplicates(rows: { id: string }[]) {
   return rows.filter(({ id }) => seen.has(id) || !seen.add(id)).map(({ id }) => id);
 }
 
+/** Returns an error for each occurrence of an ID after its first occurrence. */
 function collectDuplicateErrors<T extends { id: string }>(rows: T[], label: string): string[] {
   return duplicates(rows).map((id) => `duplicate ${label} ${id}`);
 }
 
+/** Returns labeled errors for rows with non-finite or out-of-range coordinates. */
 function collectCoordinateErrors<T extends { id: string } & Coordinates>(
   rows: T[],
   label: string,
@@ -128,6 +130,7 @@ function collectCoordinateErrors<T extends { id: string } & Coordinates>(
   return errors;
 }
 
+/** Checks duplicate IDs and beach coordinates before cameras are joined. */
 function collectInitialErrors(
   sources: SourceRecord[],
   beaches: BeachRecord[],
@@ -141,6 +144,7 @@ function collectInitialErrors(
   ];
 }
 
+/** Indexes sources and beaches by ID; later records replace earlier records with the same ID. */
 function buildCatalogIndexes(sources: SourceRecord[], beaches: BeachRecord[]) {
   return {
     sourcesById: new Map(sources.map((source) => [source.id, source] as const)),
@@ -148,6 +152,7 @@ function buildCatalogIndexes(sources: SourceRecord[], beaches: BeachRecord[]) {
   };
 }
 
+/** Returns the camera's approved source, or an error if it is missing or not approved. */
 function resolveSource(
   cam: CameraRecord,
   sourcesById: Map<string, SourceRecord>,
@@ -159,6 +164,7 @@ function resolveSource(
   return ok(source);
 }
 
+/** Returns the referenced beach, undefined if none is specified, or an error for an unknown ID. */
 function resolveBeach(
   cam: CameraRecord,
   beachesById: Map<string, BeachRecord>,
@@ -170,6 +176,7 @@ function resolveBeach(
   return ok(beach);
 }
 
+/** Uses the beach's place, or requires the camera's locality, region, and country. */
 function resolvePlace(cam: CameraRecord, beach?: BeachRecord): Result<Place, string> {
   if (beach) return ok({ beach: beach.name, region: beach.region, country: beach.country });
 
@@ -179,6 +186,7 @@ function resolvePlace(cam: CameraRecord, beach?: BeachRecord): Result<Place, str
   return ok({ beach: beachName, region, country });
 }
 
+/** Uses each camera coordinate when present, otherwise its beach's, and rejects invalid coordinates. */
 function resolveCoordinates(cam: CameraRecord, beach?: BeachRecord): Result<Coordinates, string> {
   const point = {
     latitude: cam.latitude ?? beach?.latitude,
@@ -188,6 +196,7 @@ function resolveCoordinates(cam: CameraRecord, beach?: BeachRecord): Result<Coor
   return ok(point);
 }
 
+/** Combines the resolved place and coordinates with camera, source, and beach metadata. */
 function buildCameraInfo(
   cam: CameraRecord,
   source: SourceRecord,
@@ -217,6 +226,7 @@ function buildCameraInfo(
   };
 }
 
+/** Builds a camera for the source's access method, or returns an error for invalid details. */
 function materializeCamera(
   info: CameraInfo,
   cam: CameraRecord,
@@ -250,7 +260,12 @@ function materializeCamera(
   return err(`source ${source.id} has no access method`);
 }
 
-// Joins and validates the catalog. Throws on any problem so a bad record fails tests and the build.
+/**
+ * Joins cameras to approved sources and optional beaches in camera order.
+ * Beach coordinates are used for missing camera coordinates. Throws an Error containing
+ * the collected validation problems. Each camera contributes at most one joining error;
+ * duplicate IDs are reported separately.
+ */
 export function buildCatalog(
   sources: SourceRecord[],
   beaches: BeachRecord[],
@@ -304,8 +319,11 @@ export function buildCatalog(
   return joinedCameras;
 }
 
-// Lists index beaches that no curated beach already covers. Throws if a curated link points at an
-// EPA segment that is no longer in the index, so a refresh cannot silently break links.
+/**
+ * Lists index beaches not covered by curated EPA links, assigning them country "USA".
+ * Throws an Error for duplicate index IDs, invalid index coordinates, unresolved curated
+ * links, or listed index IDs that collide with curated beach IDs.
+ */
 export function buildBeachIndex(curated: BeachRecord[], index: IndexBeachRecord[]): IndexedBeach[] {
   const errors = [
     ...collectDuplicateErrors(index, "index beach"),

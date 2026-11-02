@@ -66,6 +66,13 @@ export default function App() {
                     ? `No saved beaches within ${radiusMiles} miles.`
                     : `No listed beaches within ${radiusMiles} miles. Try a wider range.`}
                 </p>
+              ) : browser.locationError ? (
+                <div className="space-y-2">
+                  <p>{browser.locationError}</p>
+                  <Button variant="secondary" onPress={browser.retryLocation}>
+                    Try again
+                  </Button>
+                </div>
               ) : (
                 <p>
                   {browser.locating

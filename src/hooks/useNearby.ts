@@ -10,16 +10,24 @@ export function useNearby(onLocated: (area: SearchArea) => void) {
   const [locationError, setLocationError] = useState("");
   const receiveLocation = useEffectEvent((point: Coordinates) => {
     setLocating(false);
+    setLocationError("");
     onLocated({ ...point, label: "your location", kind: "device" });
   });
 
-  useEffect(() => {
+  function start() {
+    cleanup.current?.();
+    setLocating(true);
+    setLocationError("");
     const stop = startLocationRequest(navigator.geolocation, receiveLocation, (error) => {
       setLocating(false);
       setLocationError(error.message);
     });
     cleanup.current = stop;
-    return stop;
+  }
+
+  useEffect(() => {
+    start();
+    return () => cleanup.current?.();
   }, []);
 
   function cancel() {
@@ -28,5 +36,9 @@ export function useNearby(onLocated: (area: SearchArea) => void) {
     setLocationError("");
   }
 
-  return { locating, locationError, cancel };
+  function retry() {
+    start();
+  }
+
+  return { locating, locationError, cancel, retry };
 }

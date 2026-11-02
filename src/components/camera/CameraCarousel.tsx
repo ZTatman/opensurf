@@ -26,7 +26,7 @@ export default function CameraCarousel({
     <Carousel
       title={title}
       description={description}
-      label={`${title} beaches`}
+      label={`${title} cameras`}
       empty={empty}
       action={action}
       status={status}

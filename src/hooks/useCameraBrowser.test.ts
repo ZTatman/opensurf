@@ -29,13 +29,18 @@ const narrowed: BrowserState = {
 };
 
 describe("filter rules", () => {
-  it("clears narrower filters when a broader one changes", () => {
+  it("clears the region when the country changes without changing search", () => {
     expect(browserReducer(narrowed, { type: "filter", patch: { country: "Italy" } })).toMatchObject(
-      { country: "Italy", region: "", query: "", explorePlace: null },
+      { country: "Italy", region: "", query: "pier", explorePlace: fortPierce },
     );
     expect(
       browserReducer(narrowed, { type: "filter", patch: { region: "New York" } }),
-    ).toMatchObject({ country: "USA", region: "New York", query: "", explorePlace: null });
+    ).toMatchObject({
+      country: "USA",
+      region: "New York",
+      query: "pier",
+      explorePlace: fortPierce,
+    });
     expect(browserReducer(narrowed, { type: "filter", patch: { favoritesOnly: true } })).toEqual({
       ...narrowed,
       favoritesOnly: true,
@@ -43,23 +48,26 @@ describe("filter rules", () => {
   });
   it("keeps a chosen city only while the search box shows its label", () => {
     expect(
-      browserReducer(narrowed, { type: "filter", patch: { query: fortPierce.label } }).explorePlace,
+      browserReducer(
+        { ...narrowed, query: fortPierce.label },
+        { type: "filter", patch: { query: fortPierce.label } },
+      ).explorePlace,
     ).toBe(fortPierce);
     expect(
       browserReducer(narrowed, { type: "filter", patch: { query: "Fort" } }).explorePlace,
     ).toBeNull();
   });
-  it("uses a city as the nearby fallback until the device location arrives", () => {
+  it("keeps the nearby location independent when selecting a city", () => {
     const fallback = browserReducer(narrowed, { type: "place", place: fortPierce });
     expect(fallback).toMatchObject({
-      area: { kind: "place", label: fortPierce.label },
-      explorePlace: null,
+      area: null,
+      explorePlace: fortPierce,
       query: fortPierce.label,
-      country: "",
-      region: "",
+      country: "USA",
+      region: "Florida",
     });
     const located = browserReducer(fallback, { type: "located", area: device });
-    expect(located).toMatchObject({ area: device, query: "" });
+    expect(located).toMatchObject({ area: device, query: fortPierce.label });
     expect(browserReducer(located, { type: "place", place: fortPierce })).toMatchObject({
       area: device,
       explorePlace: fortPierce,
@@ -82,7 +90,55 @@ describe("filter rules", () => {
 });
 
 describe("browse results", () => {
-  it("splits nearby and explore and narrows explore around a chosen city", () => {
+  it("submits text against the catalog without changing nearby or explore", () => {
+    const base = { ...initialBrowserState, area: device };
+    const typed = browserReducer(base, { type: "filter", patch: { query: "pipeline" } });
+    const submitted = browserReducer(typed, { type: "search-text" });
+    const results = browseResults(submitted, beaches, []);
+    expect(results.searchResults?.map(({ camera }) => camera.id)).toContain("pipeline");
+    expect(results.nearby).toEqual(browseResults(base, beaches, []).nearby);
+    expect(results.explore).toEqual(browseResults(base, beaches, []).explore);
+    const cleared = browserReducer(submitted, { type: "filter", patch: { query: "" } });
+    expect(browseResults(cleared, beaches, []).searchResults).toBeNull();
+  });
+  it("reports no matches for an unmatched submitted query", () => {
+    const typed = browserReducer(initialBrowserState, {
+      type: "filter",
+      patch: { query: "zzzzzz" },
+    });
+    const submitted = browserReducer(typed, { type: "search-text" });
+    expect(browseResults(submitted, beaches, []).searchResults).toEqual([]);
+  });
+  it("does not change browsing rows while typing and clears selected results", () => {
+    const base = { ...initialBrowserState, area: device };
+    const baseline = browseResults(base, beaches, []);
+    const typed = browserReducer(base, { type: "filter", patch: { query: "Fort" } });
+    expect(browseResults(typed, beaches, []).explore).toEqual(baseline.explore);
+    expect(browseResults(typed, beaches, []).searchResults).toBeNull();
+    const selected = browserReducer(typed, { type: "place", place: fortPierce });
+    const cleared = browserReducer(selected, { type: "filter", patch: { query: "" } });
+    expect(browseResults(cleared, beaches, []).searchResults).toBeNull();
+  });
+  it("shows region search results without filtering explore", () => {
+    const base = { ...initialBrowserState, area: device };
+    const selected = browserReducer(base, {
+      type: "search-region",
+      region: "Veneto",
+      country: "Italy",
+    });
+    const results = browseResults(selected, beaches, []);
+    expect(results.explore).toEqual(browseResults(base, beaches, []).explore);
+    expect(results.searchResults?.length).toBeGreaterThan(0);
+    expect(results.searchResults?.every(({ camera }) => camera.region === "Veneto")).toBe(true);
+  });
+  it("returns an empty search section when no cameras are near a selected place", () => {
+    const state = browserReducer(initialBrowserState, {
+      type: "place",
+      place: { id: "remote", name: "Remote", label: "Remote", latitude: 0, longitude: 0 },
+    });
+    expect(browseResults(state, beaches, []).searchResults).toEqual([]);
+  });
+  it("keeps nearby and explore stable when a city is selected", () => {
     const results = browseResults({ ...initialBrowserState, area: device }, beaches, []);
     expect(results.nearby).toHaveLength(3);
     expect(results.hasFilters).toBe(false);
@@ -98,7 +154,9 @@ describe("browse results", () => {
         beaches,
         [],
       );
-    expect(city(25).exploreQuery).toBe("");
+    expect(city(25).explore).toEqual(results.explore);
+    expect(city(25).nearby).toEqual(results.nearby);
+    expect(city(25).searchResults?.length).toBeGreaterThan(0);
     expect(city(25).hasSelectedPlace).toBe(true);
   });
   it("uses the range picker for a city explored from a device location", () => {
@@ -114,7 +172,7 @@ describe("browse results", () => {
         { ...initialBrowserState, area: device, radiusMiles, explorePlace: carolinaBeach },
         beaches,
         [],
-      ).explore;
+      ).searchResults!;
     expect(explore(5).map(({ camera }) => camera.id)).toEqual(["carolina-beach"]);
     expect(new Set(explore(25).map(({ camera }) => camera.id))).toEqual(
       new Set(["carolina-beach", "bald-head", "wrightsville"]),

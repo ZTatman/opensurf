@@ -19,6 +19,8 @@ type CameraFiltersProps = {
   selectedCount: number;
   onFilterChange: (patch: Partial<Filters>) => void;
   onPlace: (place: Place) => void;
+  onRegion: (region: string, country: string) => void;
+  onSearch: () => void;
   onWatch: (id: string) => void;
   onRevealPlayers: () => void;
 };
@@ -34,6 +36,8 @@ export default function CameraFilters({
   selectedCount,
   onFilterChange,
   onPlace,
+  onRegion,
+  onSearch,
   onWatch,
   onRevealPlayers,
 }: CameraFiltersProps) {
@@ -48,6 +52,8 @@ export default function CameraFilters({
           query={query}
           onQueryChange={(value) => onFilterChange({ query: value })}
           onPlace={onPlace}
+          onRegion={onRegion}
+          onSearch={onSearch}
           onWatch={onWatch}
           hasSelectedPlace={hasSelectedPlace}
           hasDeviceLocation={hasDeviceLocation}

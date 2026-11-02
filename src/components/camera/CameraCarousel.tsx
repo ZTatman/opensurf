@@ -10,7 +10,7 @@ type CameraCarouselProps = {
   actions: CameraActions;
   empty: ReactNode;
   action?: ReactNode;
-  status?: string;
+  status?: ReactNode;
 };
 
 export default function CameraCarousel({

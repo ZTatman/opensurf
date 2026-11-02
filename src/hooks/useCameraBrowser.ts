@@ -118,6 +118,7 @@ export function useCameraBrowser(favorites: string[]) {
     filters: { query, country, region, favoritesOnly } satisfies Filters,
     locating: location.locating,
     locationError: location.locationError,
+    retryLocation: location.retry,
     setFilter: (patch: Partial<Filters>) => dispatch({ type: "filter", patch }),
     setRadius: (miles: number) => dispatch({ type: "radius", miles }),
     choosePlace: (place: Place) => {

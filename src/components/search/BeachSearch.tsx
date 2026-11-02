@@ -11,26 +11,35 @@ type Suggestion = {
   id: string;
   label: string;
   detail: string;
-  kind: "beach" | "region" | "indexed" | "place";
+  kind: "beach" | "region" | "indexed" | "place" | "location";
   external?: boolean;
   cameraId?: string;
   place?: Place;
 };
+
 type Props = {
   query: string;
   onQueryChange: (query: string) => void;
   onWatch: (id: string) => void;
   onPlace: (place: Place) => void;
   hasSelectedPlace: boolean;
+  hasDeviceLocation: boolean;
+  locating: boolean;
+  onUseLocation: () => void;
 };
+
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
 
+/** Offers camera, region, beach, and place suggestions, plus a device location option when needed. */
 export default function BeachSearch({
   query,
   onQueryChange,
   onWatch,
   onPlace,
   hasSelectedPlace,
+  hasDeviceLocation,
+  locating,
+  onUseLocation,
 }: Props) {
   const [focused, setFocused] = useState(false);
   const [selected, setSelected] = useState<Suggestion | null>(null);
@@ -84,10 +93,30 @@ export default function BeachSearch({
           })),
         ]
       : [];
-  const matches =
+  const results =
     selected?.label === query && !candidates.some((item) => item.id === selected.id)
       ? [selected, ...candidates]
       : candidates;
+  const matches: Suggestion[] = hasDeviceLocation
+    ? results
+    : [
+        {
+          id: "device-location",
+          label: "Use my location",
+          detail: locating ? "Finding your location…" : "Find cameras nearby",
+          kind: "location",
+        },
+        ...results,
+      ];
+  const emptyMessage = (
+    <p className="px-3 py-4 text-sm text-muted">
+      {term.length < 3
+        ? "Type a beach, city or region."
+        : search?.status === "loading" || !search
+          ? "Searching places…"
+          : "No matching places. Try a nearby city."}
+    </p>
+  );
 
   return (
     <ComboBox
@@ -103,6 +132,10 @@ export default function BeachSearch({
       onSelectionChange={(key) => {
         const match = matches.find((item) => item.id === key);
         if (!match) return;
+        if (match.kind === "location") {
+          onUseLocation();
+          return;
+        }
         setSelected(match);
         onQueryChange(match.label);
         if (match.cameraId) onWatch(match.cameraId);
@@ -127,18 +160,7 @@ export default function BeachSearch({
         </ComboBox.Trigger>
       </ComboBox.InputGroup>
       <ComboBox.Popover className="max-h-96 overflow-y-auto">
-        <ListBox
-          items={matches}
-          renderEmptyState={() => (
-            <p className="px-3 py-4 text-sm text-muted">
-              {term.length < 3
-                ? "Type a beach, city or region."
-                : search?.status === "loading" || !search
-                  ? "Searching places…"
-                  : "No matching places. Try a nearby city."}
-            </p>
-          )}
-        >
+        <ListBox items={matches} renderEmptyState={() => emptyMessage}>
           {(item) => (
             <ListBox.Item id={item.id} textValue={item.label}>
               {item.external ? (
@@ -157,6 +179,7 @@ export default function BeachSearch({
             </ListBox.Item>
           )}
         </ListBox>
+        {!hasDeviceLocation && results.length === 0 ? emptyMessage : null}
         {term.length >= 3 && !hasSelectedPlace ? (
           <p className="border-t border-border px-3 py-2 text-xs text-muted" role="status">
             {search?.status === "error"

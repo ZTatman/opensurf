@@ -23,6 +23,7 @@ type CameraFiltersProps = {
   onRevealPlayers: () => void;
 };
 
+/** Renders search, favorites and region filters, and access to selected cameras. */
 export default function CameraFilters({
   filters,
   countries,

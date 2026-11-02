@@ -30,6 +30,7 @@ type Props = {
 
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
 
+/** Offers camera, region, beach, and place suggestions, plus a device location option when needed. */
 export default function BeachSearch({
   query,
   onQueryChange,

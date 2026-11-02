@@ -4,6 +4,11 @@ import { startLocationRequest } from "../services/geolocation";
 
 export type SearchArea = Coordinates & { label: string; kind: "device" | "place" };
 
+/**
+ * Requests device location on mount and calls onLocated with a device search area on success.
+ * Returns the request status and error message, plus controls to cancel or retry the request.
+ * Cancel and retry ignore any late result from the previous request.
+ */
 export function useNearby(onLocated: (area: SearchArea) => void) {
   const cleanup = useRef<(() => void) | null>(null);
   const [locating, setLocating] = useState(true);
@@ -30,6 +35,7 @@ export function useNearby(onLocated: (area: SearchArea) => void) {
     setLocationError("");
   }
 
+  /** Clears the error and starts another location request. */
   function retry() {
     cleanup.current?.();
     setLocating(true);

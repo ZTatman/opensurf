@@ -4,6 +4,11 @@ type LocationSource = Pick<Geolocation, "getCurrentPosition">;
 
 export const CHROME_LOCATION_SETTINGS = "chrome://settings/content/location";
 
+/**
+ * Requests device coordinates with a 12-second timeout and accepts cached positions up to five
+ * minutes old. Rejects with an Error for invalid coordinates or a browser location error; errors
+ * thrown by getCurrentPosition also reject the promise.
+ */
 export function requestLocation(geolocation: LocationSource): Promise<Coordinates> {
   return new Promise((resolve, reject) => {
     geolocation.getCurrentPosition(

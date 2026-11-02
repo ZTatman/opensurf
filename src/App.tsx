@@ -12,6 +12,7 @@ import { useFavorites } from "./hooks/useFavorites";
 import { revealPlayers, useSelection } from "./hooks/useSelection";
 import { CHROME_LOCATION_SETTINGS } from "./services/geolocation";
 
+/** Composes the camera browser, watch grid, filters, and location status. */
 export default function App() {
   // One status line, shared by favorites and selection; the latest message wins.
   const [notice, setNotice] = useState("");

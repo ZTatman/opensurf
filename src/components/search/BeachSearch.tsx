@@ -33,7 +33,11 @@ type Props = {
 
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
 
-/** Offers camera, region, beach, and place suggestions, plus a device location option when needed. */
+/**
+ * Offers camera, region, beach, and place suggestions, plus a device location option when needed.
+ * Selecting a suggestion invokes its corresponding callback. Enter submits the text via onSearch
+ * when no suggestion is active and text composition is not in progress.
+ */
 export default function BeachSearch({
   query,
   onQueryChange,
@@ -133,6 +137,7 @@ export default function BeachSearch({
     { id: "regions", label: "Regions", items: results.filter((item) => item.kind === "region") },
   ].filter((section) => section.items.length > 0);
 
+  /** Renders a suggestion with its label, detail, and kind-specific icon. */
   function renderSuggestion(item: Suggestion) {
     return (
       <ListBox.Item key={item.id} id={item.id} textValue={item.label}>

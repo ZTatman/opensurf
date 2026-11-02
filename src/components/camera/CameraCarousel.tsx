@@ -13,6 +13,7 @@ type CameraCarouselProps = {
   status?: ReactNode;
 };
 
+/** Renders camera cards in a carousel; entry distances are in kilometers when supplied. */
 export default function CameraCarousel({
   title,
   description,

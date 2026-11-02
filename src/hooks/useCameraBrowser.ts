@@ -34,6 +34,11 @@ export const initialBrowserState: BrowserState = {
   submittedQuery: "",
 };
 
+/**
+ * Updates browsing state. A country filter patch clears the region, and a changed query clears
+ * the selected place, region search, and submitted text. Place, region, and text searches replace
+ * one another without changing the nearby area. Reset keeps the area and radius in miles.
+ */
 export function browserReducer(state: BrowserState, action: BrowserAction): BrowserState {
   switch (action.type) {
     case "filter": {
@@ -95,6 +100,14 @@ export function browserReducer(state: BrowserState, action: BrowserAction): Brow
   }
 }
 
+/**
+ * Derives nearby and Explore beach camera rows, filter options, and separate search results.
+ * Nearby uses the area's radius in miles and the favorites filter; Explore also applies country
+ * and region filters. Search results use the full catalog without those filters: a selected place
+ * takes precedence over a region, then submitted text. Place results are within the radius and
+ * carry distances in kilometers. Returns null for searchResults when no search is active and an
+ * empty array when an active search has no matches. Favorites contains camera IDs.
+ */
 export function browseResults(state: BrowserState, catalog: Camera[], favorites: string[]) {
   const {
     country,
@@ -140,6 +153,11 @@ export function browseResults(state: BrowserState, catalog: Camera[], favorites:
 }
 
 // Search, filters, location and the nearby range, with the Nearby and Explore rows derived from them.
+/**
+ * Manages camera browsing and search, requesting device location on mount. Returns state, derived
+ * rows, location status and retry, and actions to update filters, the radius in miles, and search.
+ * Favorites are camera IDs; location failures are exposed through locationError.
+ */
 export function useCameraBrowser(favorites: string[]) {
   const [state, dispatch] = useReducer(browserReducer, initialBrowserState);
   const location = useNearby((area) => dispatch({ type: "located", area }));

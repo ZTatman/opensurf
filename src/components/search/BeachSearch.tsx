@@ -159,6 +159,7 @@ export default function BeachSearch({
       inputValue={query}
       selectedKey={selected?.label === query ? selected.id : null}
       onInputChange={onQueryChange}
+      defaultFilter={() => true}
       allowsCustomValue
       allowsEmptyCollection
       menuTrigger="input"

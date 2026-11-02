@@ -13,6 +13,9 @@ type CameraFiltersProps = {
   countries: string[];
   regions: string[];
   hasSelectedPlace: boolean;
+  hasDeviceLocation: boolean;
+  locating: boolean;
+  onUseLocation: () => void;
   selectedCount: number;
   onFilterChange: (patch: Partial<Filters>) => void;
   onPlace: (place: Place) => void;
@@ -25,6 +28,9 @@ export default function CameraFilters({
   countries,
   regions,
   hasSelectedPlace,
+  hasDeviceLocation,
+  locating,
+  onUseLocation,
   selectedCount,
   onFilterChange,
   onPlace,
@@ -44,6 +50,9 @@ export default function CameraFilters({
           onPlace={onPlace}
           onWatch={onWatch}
           hasSelectedPlace={hasSelectedPlace}
+          hasDeviceLocation={hasDeviceLocation}
+          locating={locating}
+          onUseLocation={onUseLocation}
         />
         <IconToggle
           label="Show favorites"

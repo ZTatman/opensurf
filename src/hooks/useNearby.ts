@@ -8,27 +8,21 @@ export function useNearby(onLocated: (area: SearchArea) => void) {
   const cleanup = useRef<(() => void) | null>(null);
   const [locating, setLocating] = useState(true);
   const [locationError, setLocationError] = useState("");
+  const [attempt, setAttempt] = useState(0);
   const receiveLocation = useEffectEvent((point: Coordinates) => {
     setLocating(false);
     setLocationError("");
     onLocated({ ...point, label: "your location", kind: "device" });
   });
 
-  function start() {
-    cleanup.current?.();
-    setLocating(true);
-    setLocationError("");
+  useEffect(() => {
     const stop = startLocationRequest(navigator.geolocation, receiveLocation, (error) => {
       setLocating(false);
       setLocationError(error.message);
     });
     cleanup.current = stop;
-  }
-
-  useEffect(() => {
-    start();
-    return () => cleanup.current?.();
-  }, []);
+    return stop;
+  }, [attempt]);
 
   function cancel() {
     cleanup.current?.();
@@ -37,7 +31,10 @@ export function useNearby(onLocated: (area: SearchArea) => void) {
   }
 
   function retry() {
-    start();
+    cleanup.current?.();
+    setLocating(true);
+    setLocationError("");
+    setAttempt((value) => value + 1);
   }
 
   return { locating, locationError, cancel, retry };

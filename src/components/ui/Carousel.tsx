@@ -20,7 +20,7 @@ type CarouselProps = {
   children: ReactNode;
   empty: ReactNode;
   action?: ReactNode;
-  status?: string;
+  status?: ReactNode;
 };
 
 // A horizontally scrolling row that never auto-advances. Each child is one snap item.

@@ -47,6 +47,24 @@ it("offers a fallback when automatic geolocation is unavailable", async () => {
   cleanup();
 });
 
+it("can request a location again after permission is denied", async () => {
+  vi.useFakeTimers();
+  const getCurrentPosition = vi
+    .fn<Geolocation["getCurrentPosition"]>()
+    .mockImplementationOnce((_success, error) => error?.({ code: 1 } as GeolocationPositionError))
+    .mockImplementationOnce((success) =>
+      success({ coords: { latitude: 42, longitude: -71 } } as GeolocationPosition),
+    );
+  const success = vi.fn();
+  const error = vi.fn();
+  startLocationRequest({ getCurrentPosition }, success, error);
+  await vi.runAllTimersAsync();
+  expect(error).toHaveBeenCalledOnce();
+  startLocationRequest({ getCurrentPosition }, success, error);
+  await vi.runAllTimersAsync();
+  expect(success).toHaveBeenCalledExactlyOnceWith({ latitude: 42, longitude: -71 });
+});
+
 it("gets a location on demand with bounded wait and handles denied permission", async () => {
   const getCurrentPosition = vi.fn<Geolocation["getCurrentPosition"]>((success) => {
     success({ coords: { latitude: 42, longitude: -71 } } as GeolocationPosition);
@@ -60,11 +78,13 @@ it("gets a location on demand with bounded wait and handles denied permission", 
   getCurrentPosition.mockImplementationOnce((_success, error) =>
     error?.({ code: 1 } as GeolocationPositionError),
   );
-  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow("Location access is off");
+  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow(
+    "chrome://settings/content/location",
+  );
   getCurrentPosition.mockImplementationOnce((_success, error) =>
     error?.({ code: 3 } as GeolocationPositionError),
   );
-  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow("try again");
+  await expect(requestLocation({ getCurrentPosition })).rejects.toThrow("Try again");
   getCurrentPosition.mockImplementationOnce((success) =>
     success({ coords: { latitude: NaN, longitude: 0 } } as GeolocationPosition),
   );

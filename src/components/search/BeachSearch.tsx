@@ -11,7 +11,7 @@ type Suggestion = {
   id: string;
   label: string;
   detail: string;
-  kind: "beach" | "region" | "indexed" | "place";
+  kind: "beach" | "region" | "indexed" | "place" | "location";
   external?: boolean;
   cameraId?: string;
   place?: Place;
@@ -23,6 +23,9 @@ type Props = {
   onWatch: (id: string) => void;
   onPlace: (place: Place) => void;
   hasSelectedPlace: boolean;
+  hasDeviceLocation: boolean;
+  locating: boolean;
+  onUseLocation: () => void;
 };
 
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
@@ -33,6 +36,9 @@ export default function BeachSearch({
   onWatch,
   onPlace,
   hasSelectedPlace,
+  hasDeviceLocation,
+  locating,
+  onUseLocation,
 }: Props) {
   const [focused, setFocused] = useState(false);
   const [selected, setSelected] = useState<Suggestion | null>(null);
@@ -86,10 +92,21 @@ export default function BeachSearch({
           })),
         ]
       : [];
-  const matches =
+  const results =
     selected?.label === query && !candidates.some((item) => item.id === selected.id)
       ? [selected, ...candidates]
       : candidates;
+  const matches: Suggestion[] = hasDeviceLocation
+    ? results
+    : [
+        {
+          id: "device-location",
+          label: "Use my location",
+          detail: locating ? "Finding your location…" : "Find cameras nearby",
+          kind: "location",
+        },
+        ...results,
+      ];
 
   return (
     <ComboBox
@@ -105,6 +122,10 @@ export default function BeachSearch({
       onSelectionChange={(key) => {
         const match = matches.find((item) => item.id === key);
         if (!match) return;
+        if (match.kind === "location") {
+          onUseLocation();
+          return;
+        }
         setSelected(match);
         onQueryChange(match.label);
         if (match.cameraId) onWatch(match.cameraId);

@@ -10,6 +10,7 @@ import RangeSelect from "./components/search/RangeSelect";
 import { useCameraBrowser } from "./hooks/useCameraBrowser";
 import { useFavorites } from "./hooks/useFavorites";
 import { revealPlayers, useSelection } from "./hooks/useSelection";
+import { CHROME_LOCATION_SETTINGS } from "./services/geolocation";
 
 export default function App() {
   // One status line, shared by favorites and selection; the latest message wins.
@@ -19,6 +20,7 @@ export default function App() {
   const browser = useCameraBrowser(favorites.favorites);
   const { area, radiusMiles, favoritesOnly, explorePlace, nearby, explore, hasFilters } = browser;
   const nearbyTitle = area?.kind === "place" ? `Near ${area.label.split(",")[0]}` : "Near you";
+  const locationMessage = browser.locationError.split(CHROME_LOCATION_SETTINGS);
   const cameraActions: CameraActions = {
     selectedIds: selection.selectedIds,
     favoriteIds: favorites.favoriteIds,
@@ -35,6 +37,9 @@ export default function App() {
           countries={browser.countries}
           regions={browser.regions}
           hasSelectedPlace={browser.hasSelectedPlace}
+          hasDeviceLocation={browser.area?.kind === "device"}
+          locating={browser.locating}
+          onUseLocation={browser.retryLocation}
           selectedCount={selection.count}
           onFilterChange={browser.setFilter}
           onPlace={browser.choosePlace}
@@ -55,7 +60,23 @@ export default function App() {
                 ? `${nearby.length} beach cam${nearby.length === 1 ? "" : "s"} within ${radiusMiles} miles${area.kind === "place" ? ` of ${area.label.split(",")[0]}` : ""}`
                 : `Beaches within ${radiusMiles} miles of your location`
             }
-            status={browser.locationError || (browser.locating ? "Finding your location…" : "")}
+            status={
+              browser.locationError ? (
+                locationMessage.length === 2 ? (
+                  <>
+                    {locationMessage[0]}
+                    <code className="rounded bg-foreground/15 px-1 py-0.5 font-mono text-foreground break-all">
+                      {CHROME_LOCATION_SETTINGS}
+                    </code>
+                    {locationMessage[1]}
+                  </>
+                ) : (
+                  browser.locationError
+                )
+              ) : browser.locating ? (
+                "Finding your location…"
+              ) : null
+            }
             entries={nearby}
             actions={cameraActions}
             action={<RangeSelect miles={radiusMiles} onChange={browser.setRadius} />}
@@ -66,13 +87,6 @@ export default function App() {
                     ? `No saved beaches within ${radiusMiles} miles.`
                     : `No listed beaches within ${radiusMiles} miles. Try a wider range.`}
                 </p>
-              ) : browser.locationError ? (
-                <div className="space-y-2">
-                  <p>{browser.locationError}</p>
-                  <Button variant="secondary" onPress={browser.retryLocation}>
-                    Try again
-                  </Button>
-                </div>
               ) : (
                 <p>
                   {browser.locating

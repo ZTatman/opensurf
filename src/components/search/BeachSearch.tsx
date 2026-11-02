@@ -107,6 +107,15 @@ export default function BeachSearch({
         },
         ...results,
       ];
+  const emptyMessage = (
+    <p className="px-3 py-4 text-sm text-muted">
+      {term.length < 3
+        ? "Type a beach, city or region."
+        : search?.status === "loading" || !search
+          ? "Searching places…"
+          : "No matching places. Try a nearby city."}
+    </p>
+  );
 
   return (
     <ComboBox
@@ -150,18 +159,7 @@ export default function BeachSearch({
         </ComboBox.Trigger>
       </ComboBox.InputGroup>
       <ComboBox.Popover className="max-h-96 overflow-y-auto">
-        <ListBox
-          items={matches}
-          renderEmptyState={() => (
-            <p className="px-3 py-4 text-sm text-muted">
-              {term.length < 3
-                ? "Type a beach, city or region."
-                : search?.status === "loading" || !search
-                  ? "Searching places…"
-                  : "No matching places. Try a nearby city."}
-            </p>
-          )}
-        >
+        <ListBox items={matches} renderEmptyState={() => emptyMessage}>
           {(item) => (
             <ListBox.Item id={item.id} textValue={item.label}>
               {item.external ? (
@@ -180,6 +178,7 @@ export default function BeachSearch({
             </ListBox.Item>
           )}
         </ListBox>
+        {!hasDeviceLocation && results.length === 0 ? emptyMessage : null}
         {term.length >= 3 && !hasSelectedPlace ? (
           <p className="border-t border-border px-3 py-2 text-xs text-muted" role="status">
             {search?.status === "error"

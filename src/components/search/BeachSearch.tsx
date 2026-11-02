@@ -1,4 +1,4 @@
-import { ComboBox, Input, Label, ListBox } from "@heroui/react";
+import { ComboBox, Header, Input, Label, ListBox } from "@heroui/react";
 import { ExternalLink, MapPin, Search, Video, Waves } from "lucide-react";
 import { useState } from "react";
 import { beaches as cameras } from "../../cameras";
@@ -15,6 +15,7 @@ type Suggestion = {
   external?: boolean;
   cameraId?: string;
   place?: Place;
+  country?: string;
 };
 
 type Props = {
@@ -22,6 +23,8 @@ type Props = {
   onQueryChange: (query: string) => void;
   onWatch: (id: string) => void;
   onPlace: (place: Place) => void;
+  onRegion: (region: string, country: string) => void;
+  onSearch: () => void;
   hasSelectedPlace: boolean;
   hasDeviceLocation: boolean;
   locating: boolean;
@@ -30,12 +33,18 @@ type Props = {
 
 const regions = [...new Map(cameras.map((camera) => [camera.region, camera.country])).entries()];
 
-/** Offers camera, region, beach, and place suggestions, plus a device location option when needed. */
+/**
+ * Offers camera, region, beach, and place suggestions, plus a device location option when needed.
+ * Selecting a suggestion invokes its corresponding callback. Enter submits the text via onSearch
+ * when no suggestion is active and text composition is not in progress.
+ */
 export default function BeachSearch({
   query,
   onQueryChange,
   onWatch,
   onPlace,
+  onRegion,
+  onSearch,
   hasSelectedPlace,
   hasDeviceLocation,
   locating,
@@ -57,7 +66,8 @@ export default function BeachSearch({
             .map(([region, country]) => ({
               id: `region:${region}`,
               label: region,
-              detail: country,
+              detail: `${country} · Filter by region`,
+              country,
               kind: "region" as const,
             })),
           ...filterCameras(cameras, { query })
@@ -65,7 +75,7 @@ export default function BeachSearch({
             .map((camera) => ({
               id: `beach:${camera.id}`,
               label: camera.name,
-              detail: `${camera.beach}, ${camera.region}${camera.playback === "external" ? ` · Opens ${camera.sourceName}` : ""}`,
+              detail: `${camera.beach}, ${camera.region} · ${camera.playback === "external" ? `Opens on ${camera.sourceName}` : "Watch camera"}`,
               external: camera.playback === "external",
               kind: "beach" as const,
               cameraId: camera.id,
@@ -74,7 +84,7 @@ export default function BeachSearch({
           ...searchBeachIndex(beachIndex, query, 3).map((beach) => ({
             id: `indexed:${beach.id}`,
             label: beach.name,
-            detail: `${beach.county ? `${beach.county}, ` : ""}${beach.region} · No camera yet`,
+            detail: `${beach.county ? `${beach.county}, ` : ""}${beach.region} · No camera listed · Explore nearby`,
             kind: "indexed" as const,
             place: {
               id: `indexed:${beach.id}`,
@@ -87,7 +97,7 @@ export default function BeachSearch({
           ...(search?.places ?? []).map((place) => ({
             id: place.id,
             label: place.label,
-            detail: "Find cameras nearby",
+            detail: "Explore cameras nearby",
             kind: "place" as const,
             place,
           })),
@@ -114,9 +124,39 @@ export default function BeachSearch({
         ? "Type a beach, city or region."
         : search?.status === "loading" || !search
           ? "Searching places…"
-          : "No matching places. Try a nearby city."}
+          : "No results found. Try another beach, city, or region."}
     </p>
   );
+  const sections = [
+    { id: "cameras", label: "Cameras", items: results.filter((item) => item.kind === "beach") },
+    {
+      id: "places",
+      label: "Places",
+      items: results.filter((item) => item.kind === "place" || item.kind === "indexed"),
+    },
+    { id: "regions", label: "Regions", items: results.filter((item) => item.kind === "region") },
+  ].filter((section) => section.items.length > 0);
+
+  /** Renders a suggestion with its label, detail, and kind-specific icon. */
+  function renderSuggestion(item: Suggestion) {
+    return (
+      <ListBox.Item key={item.id} id={item.id} textValue={item.label}>
+        {item.external ? (
+          <ExternalLink size={17} aria-hidden="true" />
+        ) : item.kind === "beach" ? (
+          <Video size={17} aria-hidden="true" />
+        ) : item.kind === "indexed" ? (
+          <Waves size={17} aria-hidden="true" />
+        ) : (
+          <MapPin size={17} aria-hidden="true" />
+        )}
+        <div className="min-w-0">
+          <Label className="truncate">{item.label}</Label>
+          <span className="block text-xs text-muted">{item.detail}</span>
+        </div>
+      </ListBox.Item>
+    );
+  }
 
   return (
     <ComboBox
@@ -124,7 +164,7 @@ export default function BeachSearch({
       inputValue={query}
       selectedKey={selected?.label === query ? selected.id : null}
       onInputChange={onQueryChange}
-      items={matches}
+      defaultFilter={() => true}
       allowsCustomValue
       allowsEmptyCollection
       menuTrigger="input"
@@ -140,6 +180,7 @@ export default function BeachSearch({
         onQueryChange(match.label);
         if (match.cameraId) onWatch(match.cameraId);
         if (match.place) onPlace(match.place);
+        if (match.kind === "region" && match.country) onRegion(match.label, match.country);
       }}
     >
       <Label className="sr-only">Search beaches, cities or regions</Label>
@@ -149,6 +190,17 @@ export default function BeachSearch({
           placeholder="Beach, city or region…"
           type="search"
           onKeyDownCapture={(event) => {
+            if (
+              event.key === "Enter" &&
+              !event.nativeEvent.isComposing &&
+              !event.currentTarget.getAttribute("aria-activedescendant")
+            ) {
+              event.preventDefault();
+              event.stopPropagation();
+              onSearch();
+              event.currentTarget.blur();
+              return;
+            }
             if (event.key !== "Escape") return;
             event.preventDefault();
             event.stopPropagation();
@@ -160,24 +212,16 @@ export default function BeachSearch({
         </ComboBox.Trigger>
       </ComboBox.InputGroup>
       <ComboBox.Popover className="max-h-96 overflow-y-auto">
-        <ListBox items={matches} renderEmptyState={() => emptyMessage}>
-          {(item) => (
-            <ListBox.Item id={item.id} textValue={item.label}>
-              {item.external ? (
-                <ExternalLink size={17} aria-hidden="true" />
-              ) : item.kind === "beach" ? (
-                <Video size={17} aria-hidden="true" />
-              ) : item.kind === "indexed" ? (
-                <Waves size={17} aria-hidden="true" />
-              ) : (
-                <MapPin size={17} aria-hidden="true" />
-              )}
-              <div className="min-w-0">
-                <Label className="truncate">{item.label}</Label>
-                <span className="block text-xs text-muted">{item.detail}</span>
-              </div>
-            </ListBox.Item>
-          )}
+        <ListBox renderEmptyState={() => emptyMessage}>
+          {!hasDeviceLocation ? renderSuggestion(matches[0]) : null}
+          {sections.map((section) => (
+            <ListBox.Section key={section.id}>
+              <Header className="border-t border-border px-3 pt-3 pb-1 text-xs font-semibold text-muted">
+                {section.label}
+              </Header>
+              {section.items.map(renderSuggestion)}
+            </ListBox.Section>
+          ))}
         </ListBox>
         {!hasDeviceLocation && results.length === 0 ? emptyMessage : null}
         {term.length >= 3 && !hasSelectedPlace ? (
@@ -185,7 +229,7 @@ export default function BeachSearch({
             {search?.status === "error"
               ? search.error
               : search?.status === "ready"
-                ? "Cities via Open-Meteo · Select a place to find nearby cams."
+                ? "Cities via Open-Meteo · Select a place to find nearby cameras."
                 : "Looking up cities…"}
           </p>
         ) : null}

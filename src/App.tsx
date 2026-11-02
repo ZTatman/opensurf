@@ -44,22 +44,51 @@ export default function App() {
           selectedCount={selection.count}
           onFilterChange={browser.setFilter}
           onPlace={browser.choosePlace}
+          onRegion={browser.chooseRegion}
+          onSearch={browser.submitSearch}
           onWatch={selection.watch}
           onRevealPlayers={revealPlayers}
         />
       </SiteHeader>
 
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-8 sm:py-8">
-        <h1 className="sr-only">Public surf and beach cameras</h1>
+        <h1 className="mb-6 text-sm text-muted">Free beach cams, all in one place.</h1>
         <WatchGrid cameras={selection.viewing} onRemove={selection.remove} />
 
         <div id="camera-library" className="space-y-10 scroll-mt-40 sm:scroll-mt-28">
+          {browser.searchResults ? (
+            <CameraCarousel
+              title={
+                explorePlace
+                  ? `Cameras near ${explorePlace.name}`
+                  : browser.searchRegion
+                    ? `Cameras in ${browser.searchRegion.region}`
+                    : `Results for “${browser.submittedQuery}”`
+              }
+              description={
+                explorePlace
+                  ? `${browser.searchResults.length} ${browser.searchResults.length === 1 ? "camera" : "cameras"} within ${radiusMiles} miles`
+                  : `${browser.searchResults.length} ${browser.searchResults.length === 1 ? "camera" : "cameras"}`
+              }
+              entries={browser.searchResults}
+              actions={cameraActions}
+              empty={
+                <p>
+                  {explorePlace
+                    ? `No cameras listed within ${radiusMiles} miles.`
+                    : browser.searchRegion
+                      ? `No cameras listed in ${browser.searchRegion.region}.`
+                      : "No cameras match your search."}
+                </p>
+              }
+            />
+          ) : null}
           <CameraCarousel
             title={nearbyTitle}
             description={
               area
-                ? `${nearby.length} beach cam${nearby.length === 1 ? "" : "s"} within ${radiusMiles} miles${area.kind === "place" ? ` of ${area.label.split(",")[0]}` : ""}`
-                : `Beaches within ${radiusMiles} miles of your location`
+                ? `${nearby.length} ${nearby.length === 1 ? "camera" : "cameras"} within ${radiusMiles} miles`
+                : `Cameras within ${radiusMiles} miles of your location`
             }
             status={
               browser.locationError ? (
@@ -85,14 +114,14 @@ export default function App() {
               area ? (
                 <p>
                   {favoritesOnly
-                    ? `No saved beaches within ${radiusMiles} miles.`
-                    : `No listed beaches within ${radiusMiles} miles. Try a wider range.`}
+                    ? `No saved cameras within ${radiusMiles} miles.`
+                    : `No cameras listed within ${radiusMiles} miles. Try a wider range.`}
                 </p>
               ) : (
                 <p>
                   {browser.locating
-                    ? "Allow location access in your browser to see nearby beaches."
-                    : "Search for a city to look nearby instead."}
+                    ? "Allow location access in your browser to see nearby cameras."
+                    : "Search for a city or use your location."}
                 </p>
               )
             }
@@ -101,26 +130,24 @@ export default function App() {
           <CameraCarousel
             title="Explore"
             description={
-              explorePlace
-                ? `${explore.length} beaches within ${radiusMiles} miles of ${explorePlace.name}`
-                : hasFilters
-                  ? `${explore.length} matching beaches outside your nearby selection`
-                  : area
-                    ? "Other beaches around the world"
-                    : "Discover beaches around the world"
+              hasFilters
+                ? `${explore.length} matching ${explore.length === 1 ? "camera" : "cameras"} outside your nearby selection`
+                : area
+                  ? "Other cameras around the world"
+                  : "Discover cameras around the world"
             }
             entries={explore}
             actions={cameraActions}
             empty={
               hasFilters ? (
                 <>
-                  <p>No other beaches match these filters.</p>
+                  <p>No cameras match these filters.</p>
                   <Button className="mt-3" variant="secondary" onPress={browser.resetFilters}>
                     Clear filters
                   </Button>
                 </>
               ) : (
-                <p>No other beaches in the catalog yet.</p>
+                <p>No other cameras in the catalog yet.</p>
               )
             }
           />

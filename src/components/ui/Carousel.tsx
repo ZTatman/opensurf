@@ -15,7 +15,7 @@ import { scrollBehavior } from "../../lib/motion";
 type CarouselProps = {
   title: string;
   description: string;
-  // Accessible name for the track, such as "Explore beaches".
+  // Accessible name for the track, such as "Explore cameras".
   label: string;
   children: ReactNode;
   empty: ReactNode;
